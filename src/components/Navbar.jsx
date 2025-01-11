@@ -2,13 +2,19 @@ const Navbar = () => {
     const nav = ["Home", "Projects", "About Me", "Contact"];
 
     return (
-        <div>
+        <div className="flex text-black text-2xl p-5">
+        <a href="www.google.com" className="ml-5">
+            Sehej Brar
+        </a>
+        
+        <ul className="flex w-[750px] ml-auto justify-between mr-5">
             {nav.map((item) => (
-                <div
+                <li
                     key={item}>
                     {item}
-                </div>
+                </li>
             ))}
+        </ul>
         </div>
     );
 };

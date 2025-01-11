@@ -2,8 +2,9 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
     return (
-        <main>
+        <main className="h-screen bg-white">
             <Navbar />
+            <Hero/>
         </main>
     );
 };
