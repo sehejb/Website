@@ -6,6 +6,7 @@ import { useRef } from 'react';
 gsap.registerPlugin(TextPlugin)
 
 function deleteChar(ref) {
+    /* Remove char one at a time starting from the last char */
     let delChar = setInterval(() => {
         const elem = ref?.current
         const len = elem?.textContent.length
@@ -40,7 +41,7 @@ const Hero = () => {
             // for the text to remain
             tlMaster.to(titleRef.current, {duration: 2, text: word, ease: 'none'})
 
-            tlMaster.call(() => deleteChar(titleRef))
+            tlMaster.call(() => deleteChar(titleRef)) // add the function into the timeline
             tlMaster.to({}, {duration: Math.round(word.length / 10)}) // delay of 0.1s per char
         
         // play the timeline
@@ -49,11 +50,13 @@ const Hero = () => {
     })
 
     return (
+        // put contents in the center and stack them on top of each other
         <div className='flex flex-col justify-center text-black'>
+            {/* center them, size of 8xl */}
             <div id='intro' className='flex justify-center text-8xl mt-10 p-2'>
                 Hi, I'm Sehej Brar
             </div>
-            
+            {/* center them, size of 6xl, margin 10 and padding 2 */}
             <div className='flex justify-center text-6xl mt-10 p-2' style={{"display": "flex"}}>
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
