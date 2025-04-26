@@ -1,7 +1,10 @@
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import { TextPlugin } from "gsap/TextPlugin";
-import { useRef } from 'react';
+import { useRef, Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF, OrbitControls, SpotLight } from '@react-three/drei';
+import { AmbientLight, GridHelper } from 'three';
 
 gsap.registerPlugin(TextPlugin)
 
@@ -12,6 +15,12 @@ function deleteChar(ref) {
         const len = elem?.textContent.length
         if (len) {elem.textContent = elem?.textContent.substring(0, len - 1)} else {clearInterval(delChar)}
     }, 100); // delete one char every 0.5 s
+}
+
+function Model() {
+    // load the model
+    const gltf = useGLTF("/techScene.glb")
+    return <primitive object={gltf.scene} position={[-10, 0, 0]}/> // return the actual scene object in 3js 
 }
 
 const Hero = () => {
@@ -51,15 +60,25 @@ const Hero = () => {
 
     return (
         // put contents in the center and stack them on top of each other
-        <div className='flex flex-col justify-center text-black'>
+        <div className='flex flex-col justify-center text-black p-3'>
             {/* center them, size of 8xl */}
-            <div id='intro' className='flex justify-center text-8xl mt-10 p-2'>
+            <div id='intro' className='flex justify-center text-7xl mt-5'>
                 Hi, I'm Sehej Brar
             </div>
             {/* center them, size of 6xl, margin 10 and padding 2 */}
-            <div className='flex justify-center text-6xl mt-10 p-2' style={{"display": "flex"}}>
+            <div className='flex justify-center text-5xl mt-7' style={{"display": "flex"}}>
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
+            </div>
+            {/* set up the canvas and place the mocdel on it */}
+            <div className='w-full h-[950px] mt-7 p-3'>
+                <Canvas camera={{position: [-600, 415, 475], fov: 68}}>
+                    <gridHelper args={[100,10]}/>
+                    {/* <spotLight position={[0, 0, 20]} intensity={10}/> */}
+                    <Model/> 
+                    {/* zoom in until 10 units away, zoom out until 60 units away */}
+                    <OrbitControls minDistance={10} maxDistance={60}/>
+                </Canvas>
             </div>
         </div>
     )
