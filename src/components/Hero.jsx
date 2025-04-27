@@ -28,7 +28,7 @@ function Floor() {
 
     return (
         <mesh position = {[0, -6.5, 0]} rotation={[Math.PI/2, 0, 0]}>
-            <planeGeometry receiveShadow args={[70, 70]}/>
+            <planeGeometry args={[70, 70]}/>
             <meshStandardMaterial map={floor} side={DoubleSide}/>
         </mesh> 
     )
