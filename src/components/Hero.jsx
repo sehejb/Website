@@ -3,9 +3,8 @@ import {useGSAP} from '@gsap/react'
 import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useGLTF, OrbitControls, SpotLight } from '@react-three/drei';
-import { AmbientLight, GridHelper } from 'three';
-
+import { useGLTF, OrbitControls, useTexture } from '@react-three/drei';
+import { DoubleSide, PlaneGeometry } from 'three';
 gsap.registerPlugin(TextPlugin)
 
 function deleteChar(ref) {
@@ -20,7 +19,19 @@ function deleteChar(ref) {
 function Model() {
     // load the model
     const gltf = useGLTF("/techScene.glb")
-    return <primitive object={gltf.scene} position={[-10, 0, 0]}/> // return the actual scene object in 3js 
+    return <primitive object={gltf.scene} castShadow position={[-10, -2, 0]}/> // return the actual scene object in 3js 
+}
+
+function Floor() {
+    // texture for the floor
+    const floor = useTexture("/stoneFloor.jpg")
+
+    return (
+        <mesh position = {[0, -6.5, 0]} rotation={[Math.PI/2, 0, 0]}>
+            <planeGeometry receiveShadow args={[70, 70]}/>
+            <meshStandardMaterial map={floor} side={DoubleSide}/>
+        </mesh> 
+    )
 }
 
 const Hero = () => {
@@ -60,24 +71,24 @@ const Hero = () => {
 
     return (
         // put contents in the center and stack them on top of each other
-        <div className='flex flex-col justify-center text-black p-3'>
+        <div className='flex bg-black flex-col justify-center text-black p-3'>
             {/* center them, size of 8xl */}
-            <div id='intro' className='flex justify-center text-7xl mt-5'>
+            <div id='intro' className='flex justify-center text-7xl mt-5 text-white'>
                 Hi, I'm Sehej Brar
             </div>
             {/* center them, size of 6xl, margin 10 and padding 2 */}
-            <div className='flex justify-center text-5xl mt-7' style={{"display": "flex"}}>
+            <div className='flex justify-center text-5xl mt-7 text-white'> {/*style={{"display": "flex"}}*/}
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
             </div>
             {/* set up the canvas and place the mocdel on it */}
             <div className='w-full h-[950px] mt-7 p-3'>
                 <Canvas camera={{position: [-600, 415, 475], fov: 68}}>
-                    <gridHelper args={[100,10]}/>
-                    {/* <spotLight position={[0, 0, 20]} intensity={10}/> */}
+                    <Floor/>
                     <Model/> 
                     {/* zoom in until 10 units away, zoom out until 60 units away */}
                     <OrbitControls minDistance={10} maxDistance={60}/>
+                    <spotLight castShadow position={[-600, 300, 475]} intensity={20} angle = {0.15} decay = {0}/>
                 </Canvas>
             </div>
         </div>
