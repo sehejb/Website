@@ -1,10 +1,10 @@
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import { TextPlugin } from "gsap/TextPlugin";
-import { useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture } from '@react-three/drei';
-import { AmbientLight, DoubleSide, PlaneGeometry } from 'three';
+import { DoubleSide } from 'three';
 
 gsap.registerPlugin(TextPlugin)
 
@@ -21,7 +21,7 @@ function Model() {
     // load the model
     const gltf = useGLTF("/techScene.glb")
 
-    return <primitive object={gltf.scene} castShadow scale={0.9} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
+    return <primitive object={gltf.scene} castShadow scale={0.75} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
 }
 
 function Floor() {
@@ -73,7 +73,7 @@ const Hero = () => {
 
     return (
         // put contents in the center and stack them on top of each other
-        <div className='flex bg-black flex-col justify-center text-black p-3'>
+        <div className='flex bg-black flex-col justify-center text-white p-3'>
             {/* center them, size of 8xl */}
             <div id='intro' className='flex justify-center text-7xl mt-5 text-white'>
                 Hi, I'm Sehej Brar
@@ -85,32 +85,32 @@ const Hero = () => {
                 <div id='cursor'>|</div>
             </div>
             
-            {/* set up the canvas and place the mocdel on it */}
-            <div className='w-full h-[950px] mt-7 p-3'>
-                <Canvas shadows camera={{position: [-525, 175, 275], fov: 60}}>
-                    <Floor/>
+            {/* set up the canvas and place the model on it */}
+            <div className='flex justify-center w-full h-[800px] mt-7 p-3'>
+                <div className='flex w-4/5'>
+                    <Canvas shadows camera={{position: [-525, 175, 275], fov: 45}}>
+                        <Floor/>
 
-                    <Model/> 
-                   
-                    {/* zoom in until 10 units away, zoom out until 60 units away */}
-                    <OrbitControls autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80}/>
+                        <Model/> 
                     
-                    {/* for the model itself */}
-                    <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
-                    <ambientLight intensity={0.095}/>
-                    
-                    {/* only on face */}
-                    <pointLight position={[-3, 15, -1.5]} intensity={8} decay={2.5}/>
+                        {/* zoom in until 10 units away, zoom out until 60 units away */}
+                        <OrbitControls autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80}/>
+                        
+                        {/* for the model itself */}
+                        <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
+                        <ambientLight intensity={0.095}/>
+                        
+                        {/* only on face */}
+                        {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
 
-                    {/* from bulb */}
-                    <pointLight position={[12, 17, -10]} intensity={20} decay={2.5}/>
-
-                    {/* light out of the lamp */}
-                    <pointLight position={[10.7, 20.5, -13]} intensity={20}/>
-                </Canvas>
+                        {/* light out of the lamp */}
+                        <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/>
+                    </Canvas>
+                </div>
             </div>
         </div>
     )
 }
 
+useGLTF.preload('/techScene.glb')
 export default Hero;
