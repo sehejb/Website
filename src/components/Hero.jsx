@@ -2,9 +2,10 @@ import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import { TextPlugin } from "gsap/TextPlugin";
 import { useRef, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture } from '@react-three/drei';
-import { DoubleSide, PlaneGeometry } from 'three';
+import { AmbientLight, DoubleSide, PlaneGeometry } from 'three';
+
 gsap.registerPlugin(TextPlugin)
 
 function deleteChar(ref) {
@@ -19,7 +20,8 @@ function deleteChar(ref) {
 function Model() {
     // load the model
     const gltf = useGLTF("/techScene.glb")
-    return <primitive object={gltf.scene} castShadow position={[-10, -2, 0]}/> // return the actual scene object in 3js 
+
+    return <primitive object={gltf.scene} castShadow scale={0.9} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
 }
 
 function Floor() {
@@ -27,16 +29,16 @@ function Floor() {
     const floor = useTexture("/stoneFloor.jpg")
 
     return (
-        <mesh position = {[0, -6.5, 0]} rotation={[Math.PI/2, 0, 0]}>
-            <planeGeometry args={[70, 70]}/>
-            <meshStandardMaterial map={floor} side={DoubleSide}/>
+        <mesh receiveShadow position = {[0, -6.5, 0]} rotation={[-Math.PI/2, 0, 0]}>
+            <planeGeometry args={[100, 100]}/>
+            <meshStandardMaterial map={floor} side={DoubleSide} roughness={0.75} metalness={0}/>
         </mesh> 
     )
 }
 
 const Hero = () => {
     const titles = ["Software Engineer", "Machine Learning Enthusiast", "Website Developer", "UI Designer"]
-    let titleRef = useRef(null)
+    let titleRef = useRef()
 
     // A timeline that manages the animations for the titles (repeats infintely, 1 sec delay)
     let tlMaster = gsap.timeline({repeat:-1, repeatDelay: 2})
@@ -76,19 +78,35 @@ const Hero = () => {
             <div id='intro' className='flex justify-center text-7xl mt-5 text-white'>
                 Hi, I'm Sehej Brar
             </div>
+            
             {/* center them, size of 6xl, margin 10 and padding 2 */}
             <div className='flex justify-center text-5xl mt-7 text-white'> {/*style={{"display": "flex"}}*/}
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
             </div>
+            
             {/* set up the canvas and place the mocdel on it */}
             <div className='w-full h-[950px] mt-7 p-3'>
-                <Canvas camera={{position: [-600, 415, 475], fov: 68}}>
+                <Canvas shadows camera={{position: [-525, 175, 275], fov: 60}}>
                     <Floor/>
+
                     <Model/> 
+                   
                     {/* zoom in until 10 units away, zoom out until 60 units away */}
-                    <OrbitControls minDistance={10} maxDistance={60}/>
-                    <spotLight castShadow position={[-600, 300, 475]} intensity={20} angle = {0.15} decay = {0}/>
+                    <OrbitControls autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80}/>
+                    
+                    {/* for the model itself */}
+                    <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
+                    <ambientLight intensity={0.095}/>
+                    
+                    {/* only on face */}
+                    <pointLight position={[-3, 15, -1.5]} intensity={8} decay={2.5}/>
+
+                    {/* from bulb */}
+                    <pointLight position={[12, 17, -10]} intensity={20} decay={2.5}/>
+
+                    {/* light out of the lamp */}
+                    <pointLight position={[10.7, 20.5, -13]} intensity={20}/>
                 </Canvas>
             </div>
         </div>
