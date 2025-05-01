@@ -1,9 +1,9 @@
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import { TextPlugin } from "gsap/TextPlugin";
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useGLTF, OrbitControls, useTexture } from '@react-three/drei';
+import { useGLTF, OrbitControls, useTexture, useAnimations } from '@react-three/drei';
 import { DoubleSide } from 'three';
 
 gsap.registerPlugin(TextPlugin)
@@ -18,10 +18,20 @@ function deleteChar(ref) {
 }
 
 function Model() {
-    // load the model
-    const gltf = useGLTF("/techScene.glb")
+    // ref to model
+    let modelRef = useRef()
 
-    return <primitive object={gltf.scene} castShadow scale={0.75} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
+    // load the model
+    const {scene, animations} = useGLTF("/techScene.glb")
+
+    const {actions} = useAnimations(animations, modelRef)
+
+    // run after the render or when action changes
+    useEffect(() => {
+        actions["Armature|mixamo.com|Layer0"].play()
+    }, [actions])
+
+    return <primitive object={scene} ref={modelRef} castShadow scale={0.75} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
 }
 
 function Floor() {
