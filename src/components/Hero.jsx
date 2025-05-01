@@ -32,7 +32,7 @@ function Model() {
         actions["Armature|mixamo.com|Layer0"].play()
     }, [actions])
 
-    return <primitive object={scene} ref={modelRef} castShadow scale={0.75} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
+    return <primitive object={scene} ref={modelRef} castShadow scale={0.8} position={[-11, -3.15, -15]}/> // return the actual scene object in 3js 
 }
 
 function Floor() {
@@ -86,17 +86,17 @@ const Hero = () => {
         // put contents in the center and stack them on top of each other
         <div className='flex bg-black flex-col justify-center text-white p-3'>
             {/* center them, size of 8xl */}
-            <div id='intro' className='flex justify-center text-7xl mt-5 text-white'>
+            <div id='intro' className='flex justify-center text-7xl mt-8 text-white'>
                 Hi, I'm Sehej Brar
             </div>
             
             {/* center them, size of 6xl, margin 10 and padding 2 */}
-            <div className='flex justify-center text-5xl mt-7 text-white'> {/*style={{"display": "flex"}}*/}
+            <div className='flex justify-center text-5xl mt-9 text-white'> {/*style={{"display": "flex"}}*/}
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
             </div>
 
-            <div className='flex justify-center p-2 mt-7'>
+            <div className='flex justify-center p-2 mt-10'>
                 <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
                     <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
                         See My Projects
@@ -111,25 +111,26 @@ const Hero = () => {
             </div>
             
             {/* set up the canvas and place the model on it */}
-            <div className='flex justify-center w-full h-screen mt-7 p-3'>
-                <div className='flex w-full h-[695px]'>
-                    <Canvas shadows camera={{position: [-525, 175, 275], fov: 45}}>
+            <div className='flex justify-center w-full h-screen'>
+                <div className='flex w-full h-[700px]'>
+                    <Canvas shadows camera={{position: [-525, 215, 30], fov: 33}}>
                         <Floor/>
 
                         <Model/> 
                     
                         {/* zoom in until 10 units away, zoom out until 60 units away */}
-                        <OrbitControls autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80}/>
+                        <OrbitControls makeDefault target={[-3, 5, -9]} autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80} enableZoom={false}/>
                         
                         {/* for the model itself */}
                         <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
-                        <ambientLight intensity={0.095}/>
+                        <ambientLight intensity={0.05}/>
                         
                         {/* only on face */}
                         {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
 
                         {/* light out of the lamp */}
                         <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/>
+
                     </Canvas>
                 </div>
             </div>
