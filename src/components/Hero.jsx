@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture, useAnimations } from '@react-three/drei';
 import { DoubleSide } from 'three';
+import { Button } from '@nextui-org/react';
 
 gsap.registerPlugin(TextPlugin)
 
@@ -94,10 +95,24 @@ const Hero = () => {
                 <div ref={titleRef}></div>
                 <div id='cursor'>|</div>
             </div>
+
+            <div className='flex justify-center p-2 mt-7'>
+                <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
+                    <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
+                        See My Projects
+                    </div>
+                </Button>
+
+                <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] rounded-full'>
+                    <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-purple-500/30'>
+                        Let's Connect!
+                    </div>
+                </Button>
+            </div>
             
             {/* set up the canvas and place the model on it */}
-            <div className='flex justify-center w-full h-[800px] mt-7 p-3'>
-                <div className='flex w-4/5'>
+            <div className='flex justify-center w-full h-screen mt-7 p-3'>
+                <div className='flex w-full h-[695px]'>
                     <Canvas shadows camera={{position: [-525, 175, 275], fov: 45}}>
                         <Floor/>
 
