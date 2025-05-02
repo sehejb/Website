@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Projects from "./components/About";
+import About from "./components/About";
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         </div>
         
         <div className="flex flex-col h-screen w-screen">
-          <Projects />
+          <About />
         </div>
         
     </main>

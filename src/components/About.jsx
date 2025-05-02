@@ -1,6 +1,6 @@
 import Cards from './Cards'
 
-const Projects = () => {
+const About = () => {
     return (
         <div className="flex flex-col h-1/3">
             <h1 className="mt-10 text-center text-8xl text-white">About Me </h1>
@@ -10,4 +10,4 @@ const Projects = () => {
     )
 }
 
-export default Projects;
+export default About;
