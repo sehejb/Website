@@ -85,20 +85,20 @@ const Hero = () => {
 
     return (
         // put contents in the center and stack them on top of each other
-        <div className='flex w-screen h-full flex-col'>
-            <div className='flex flex-col w-screen bg-blue-500'>
+        <div className='flex w-full h-full flex-col'>
+            <div className='flex flex-col h-1/3 w-screen'>
                 {/* center them, size of 8xl */}
-                <h1 id='intro' className='flex justify-center text-6xl text-white'>
+                <h1 id='intro' className='flex justify-center text-8xl text-white pt-12'>
                     Hi, I'm Sehej Brar
                 </h1>
                 
                 {/* center them, size of 6xl, margin 10 and padding 2 */}
-                <h2 className='flex justify-center text-5xl text-white'> {/*style={{"display": "flex"}}*/}
+                <h2 className='flex justify-center text-6xl text-white pt-8'> {/*style={{"display": "flex"}}*/}
                     <div ref={titleRef}></div>
                     <div id='cursor'>|</div>
                 </h2>
 
-                <div className='flex justify-center gap-x-4'>
+                <div className='flex justify-center gap-x-4 pt-10'>
                     <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
                         <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
                             See My Projects
@@ -114,7 +114,7 @@ const Hero = () => {
             </div>
             
             {/* set up the canvas and place the model on it */}
-            <div className='flex-1 bg-yellow-500'>
+            <div className='h-2/3'>
                 <div className='w-full h-full'>
                     <Canvas shadows camera={{position: [-525, 215, 30], fov: 33}}>
                     <Floor/>
@@ -126,7 +126,7 @@ const Hero = () => {
                     
                     {/* for the model itself */}
                     <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
-                    <ambientLight intensity={0.05}/>
+                    <ambientLight intensity={0.095}/>
                     
                     {/* only on face */}
                     {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}

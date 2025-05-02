@@ -1,8 +1,10 @@
 
 const Projects = () => {
     return (
-        <div>Hello</div>
+        <div className="text-8xl text-white">
+            Hello
+        </div>
     )
 }
 
-export default Projects
+export default Projects;
