@@ -1,5 +1,5 @@
 const Navbar = () => {
-    const nav = ["Home", "Projects", "About Me", "Contact"];
+    const nav = ["Home", "Projects", "Resume", "Contact"];
 
     return (
         <div className="flex text-black text-2xl p-5 bg-black">

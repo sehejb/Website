@@ -6,7 +6,6 @@ import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture, useAnimations } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import { Button } from '@nextui-org/react';
-import Projects from './Projects'
 
 gsap.registerPlugin(TextPlugin)
 
@@ -101,7 +100,7 @@ const Hero = () => {
                 <div className='flex justify-center gap-x-4 pt-10'>
                     <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
                         <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
-                            See My Projects
+                            Get in Touch
                         </div>
                     </Button>
 
