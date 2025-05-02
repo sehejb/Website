@@ -6,6 +6,7 @@ import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture, useAnimations } from '@react-three/drei';
 import { DoubleSide } from 'three';
 import { Button } from '@nextui-org/react';
+import Projects from './Projects'
 
 gsap.registerPlugin(TextPlugin)
 
@@ -84,54 +85,55 @@ const Hero = () => {
 
     return (
         // put contents in the center and stack them on top of each other
-        <div className='flex bg-black flex-col justify-center text-white p-3'>
-            {/* center them, size of 8xl */}
-            <div id='intro' className='flex justify-center text-7xl mt-8 text-white'>
-                Hi, I'm Sehej Brar
-            </div>
-            
-            {/* center them, size of 6xl, margin 10 and padding 2 */}
-            <div className='flex justify-center text-5xl mt-9 text-white'> {/*style={{"display": "flex"}}*/}
-                <div ref={titleRef}></div>
-                <div id='cursor'>|</div>
-            </div>
+        <div className='flex w-screen h-full flex-col'>
+            <div className='flex flex-col w-screen bg-blue-500'>
+                {/* center them, size of 8xl */}
+                <h1 id='intro' className='flex justify-center text-6xl text-white'>
+                    Hi, I'm Sehej Brar
+                </h1>
+                
+                {/* center them, size of 6xl, margin 10 and padding 2 */}
+                <h2 className='flex justify-center text-5xl text-white'> {/*style={{"display": "flex"}}*/}
+                    <div ref={titleRef}></div>
+                    <div id='cursor'>|</div>
+                </h2>
 
-            <div className='flex justify-center p-2 mt-10'>
-                <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
-                    <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
-                        See My Projects
-                    </div>
-                </Button>
+                <div className='flex justify-center gap-x-4'>
+                    <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
+                        <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
+                            See My Projects
+                        </div>
+                    </Button>
 
-                <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] rounded-full'>
-                    <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-purple-500/30'>
-                        Let's Connect!
-                    </div>
-                </Button>
+                    <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] rounded-full'>
+                        <div className='hover:shadow-lg hover:shadow-purple-500/25 flex h-full w-full items-center justify-center rounded-full bg-black text-white transition duration-300 ease-in-out hover:bg-gradient-to-br hover:from-gray-900 hover:to-gray-900/30 hover:transition hover:duration-300 hover:ease-in-out text-2xl'>
+                            About Me
+                        </div>
+                    </Button>
+                </div>
             </div>
             
             {/* set up the canvas and place the model on it */}
-            <div className='flex justify-center w-full h-screen'>
-                <div className='flex w-full h-[700px]'>
+            <div className='flex-1 bg-yellow-500'>
+                <div className='w-full h-full'>
                     <Canvas shadows camera={{position: [-525, 215, 30], fov: 33}}>
-                        <Floor/>
+                    <Floor/>
 
-                        <Model/> 
+                    <Model/> 
+                
+                    {/* zoom in until 10 units away, zoom out until 60 units away */}
+                    <OrbitControls makeDefault target={[-3, 5, -9]} autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80} enableZoom={false}/>
                     
-                        {/* zoom in until 10 units away, zoom out until 60 units away */}
-                        <OrbitControls makeDefault target={[-3, 5, -9]} autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80} enableZoom={false}/>
-                        
-                        {/* for the model itself */}
-                        <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
-                        <ambientLight intensity={0.05}/>
-                        
-                        {/* only on face */}
-                        {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
+                    {/* for the model itself */}
+                    <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
+                    <ambientLight intensity={0.05}/>
+                    
+                    {/* only on face */}
+                    {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
 
-                        {/* light out of the lamp */}
-                        <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/>
-
-                    </Canvas>
+                    {/* light out of the lamp */}
+                    <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/>
+                </Canvas>
                 </div>
             </div>
         </div>
