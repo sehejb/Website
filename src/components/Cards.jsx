@@ -2,9 +2,11 @@
 
 const Cards = () => {
     return (
-        <div className="w-2/3 h-2/3 p-5">
-            <div className="bg-white">
-                <h1>Metis Government</h1>
+        <div className="flex h-full w-full justify-center">
+            <div className="justify-center h-full w-full p-[1px] bg-white rounded-full">
+                <div className="justify-center h-full w-full bg-black rounded-full">
+                    Hello
+                </div>
             </div>
         </div>
     )
