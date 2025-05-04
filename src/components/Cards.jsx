@@ -16,17 +16,19 @@ function Move(ballPosRef, bowlSize) {
 
         gsap.set(item['el'], {x: item['x'], y: item['y']})
     })
-}
+} 
 
-function Ball({ballPosRef}) {
+function Ball({ballPosRef, img}) {
     const ballRef = useRef()
 
     useEffect(() => {
-        ballPosRef.current.push({x:0, y:0, sX:6, sY:8, el:ballRef.current})
+        ballPosRef.current.push({x:0, y:0, sX:100, sY:0.5, el:ballRef.current})
     }, [])
 
     return(
-        <div id="ball" ref={ballRef} className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full"></div>
+        <div id="ball" ref={ballRef} className="absolute w-20 h-20 border-white rounded-full">
+            <img src={img} />
+        </div>
     )
 }
 
@@ -40,17 +42,21 @@ const Cards = () => {
         const size = bowlRef.current.getBoundingClientRect()
         bowlSize.push(size['width'])
         bowlSize.push(size['height'])
-    })
+    }, [])
+
+    function fn() {
+        Move(ballPosRef, bowlSize)
+    }
 
     useEffect(() => {
-        gsap.ticker.add(() => Move(ballPosRef, bowlSize))
-        return () => gsap.ticker.remove(() => Move(ballPosRef, bowlSize))
+        gsap.ticker.add(fn)
+        return () => gsap.ticker.remove(fn)
     }, [])
     
     return (
         <div className="flex h-full w-full justify-center">
-            <div ref={bowlRef} className="justify-center relative h-full w-full border-white">
-                <Ball ballPosRef={ballPosRef}/>
+            <div ref={bowlRef} className="justify-center relative h-full w-full border-white border-2">
+                <Ball ballPosRef={ballPosRef} img='/react.png'/>
             </div>
         </div>
     )
