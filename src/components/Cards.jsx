@@ -1,52 +1,56 @@
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 
-let ballPos = []
-let bowlSize = []
+function Move(ballPosRef, bowlSize) {
+    ballPosRef.current.forEach((item) => {
+        item['x'] += item['sX']
+        item['y'] += item['sY']
 
-function Move(time, deltaTime, frame) {
-    ballPos.forEach((item) => {
+        if (item['x'] + 80 < bowlSize[0] || item['x'] < 0) {
+            item['sX'] *= -1
+        }
 
-        item['x'] += 1
-        item['y'] += 1
+        if (item['y'] + 80 > bowlSize[1] || item['y'] < 0) {
+            item['sY'] *= -1
+        }
+
         gsap.set(item['el'], {x: item['x'], y: item['y']})
     })
 }
 
-function Ball() {
+function Ball({ballPosRef}) {
     const ballRef = useRef()
 
     useEffect(() => {
-        const size = ballRef.current.getBoundingClientRect()
-
-        ballPos.push({x:size['x'], y:size['y'], sX:1, sY:1, el:ballRef.current})
+        ballPosRef.current.push({x:0, y:0, sX:6, sY:8, el:ballRef.current})
     }, [])
 
     return(
-        <div id="ball" ref={ballRef} className="w-10 h-10 bg-white rounded-full"></div>
+        <div id="ball" ref={ballRef} className="absolute top-0 left-0 w-20 h-20 bg-white rounded-full"></div>
     )
 }
 
 const Cards = () => {
     const bowlRef = useRef()
 
+    const ballPosRef = useRef([])
+    let bowlSize = []
+
     useEffect(() => {
-        size = bowlRef.current.getBoundingClientRect()
-        bowlSize.push(size['x'])
-        bowlSize.push(size['y'])
+        const size = bowlRef.current.getBoundingClientRect()
+        bowlSize.push(size['width'])
+        bowlSize.push(size['height'])
     })
 
     useEffect(() => {
-        gsap.ticker.add(Move)
-        return () => gsap.ticker.remove(Move)
+        gsap.ticker.add(() => Move(ballPosRef, bowlSize))
+        return () => gsap.ticker.remove(() => Move(ballPosRef, bowlSize))
     }, [])
     
     return (
         <div className="flex h-full w-full justify-center">
-            <div className="justify-center h-full w-full p-[1px] rounded-full border-white overflow-hidden">
-                <div ref={bowlRef} className='w-full h-full'>
-                    <Ball/>
-                </div>
+            <div ref={bowlRef} className="justify-center relative h-full w-full border-white">
+                <Ball ballPosRef={ballPosRef}/>
             </div>
         </div>
     )
