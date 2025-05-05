@@ -6,7 +6,7 @@ function Move(ballPosRef, bowlSize) {
         item['x'] += item['sX']
         item['y'] += item['sY']
 
-        if (item['x'] + 80 < bowlSize[0] || item['x'] < 0) {
+        if (item['x'] + 90 > bowlSize[0] || item['x'] < 0) {
             item['sX'] *= -1
         }
 
@@ -14,20 +14,33 @@ function Move(ballPosRef, bowlSize) {
             item['sY'] *= -1
         }
 
-        gsap.set(item['el'], {x: item['x'], y: item['y']})
+        gsap.set(item['el'], {x: Math.round(item['x']), y: Math.round(item['y'])})
+
+        console.log(ballPosRef.current)
     })
 } 
 
-function Ball({ballPosRef, img}) {
+// min inclusive, max exclusive
+function randomNum(min, max) {
+    let random = 0
+
+    while (random == 0) {
+        random = Math.random() * (max - min)
+    }
+
+    return random
+}
+
+function Ball({ballPosRef, img}, bowlSize) {
     const ballRef = useRef()
 
     useEffect(() => {
-        ballPosRef.current.push({x:0, y:0, sX:100, sY:0.5, el:ballRef.current})
+        ballPosRef.current.push({x:randomNum(0, bowlSize[0]), y:randomNum(0, bowlSize[1]), sX: randomNum(-6, 6), sY: randomNum(-4, 4), el:ballRef.current})
     }, [])
 
     return(
-        <div id="ball" ref={ballRef} className="absolute w-20 h-20 border-white rounded-full">
-            <img src={img} />
+        <div id="ball" ref={ballRef} className="absolute w-20 h-20 rounded-full">
+            <img src={img} className='h-full w-full object-contain'/>
         </div>
     )
 }
@@ -54,9 +67,10 @@ const Cards = () => {
     }, [])
     
     return (
-        <div className="flex h-full w-full justify-center">
-            <div ref={bowlRef} className="justify-center relative h-full w-full border-white border-2">
-                <Ball ballPosRef={ballPosRef} img='/react.png'/>
+        <div className="flex h-full w-full">
+            <div ref={bowlRef} className="relative h-full w-full border-white border-2">
+                <Ball ballPosRef={ballPosRef} bowlSize={bowlRef} img='/react.png'/>
+                <Ball ballPosRef={ballPosRef} img='/pytorch.png'/>
             </div>
         </div>
     )
