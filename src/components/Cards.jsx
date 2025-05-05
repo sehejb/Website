@@ -52,6 +52,19 @@ const Cards = () => {
     const ballPosRef = useRef([])
     let bowlSize = []
 
+    const links = ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", 
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original-wordmark.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "https://www.cleanpng.com/png-risc-v-reduced-instruction-set-computer-instructio-1803711/"
+    ]
+
     useEffect(() => {
         const size = bowlRef.current.getBoundingClientRect()
         bowlSize.push(size['width'])
@@ -70,8 +83,9 @@ const Cards = () => {
     return (
         <div className="flex h-full w-full">
             <div ref={bowlRef} className="relative h-full w-full border-white border-2">
-                <Ball ballPosRef={ballPosRef} bowlSize={bowlSize} img='/react.png'/>
-                <Ball ballPosRef={ballPosRef} bowlSize={bowlSize} img='/pytorch.png'/>
+                {links.map((item, i) => (
+                    <Ball key={i} ballPosRef={ballPosRef} bowlSize={bowlSize} img={item}/>
+                ))}
             </div>
         </div>
     )
