@@ -1,8 +1,9 @@
+
 const Navbar = () => {
     const nav = ["Home", "Projects", "Resume", "Contact"];
 
     return (
-        <div className="flex text-black text-2xl p-5 bg-black">
+        <div className="flex text-black text-2xl pt-5 pr-5 bg-black">
             <a href="www.google.com" className="ml-5 text-white">
                 Sehej Brar
             </a>
