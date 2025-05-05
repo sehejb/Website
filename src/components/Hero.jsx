@@ -87,12 +87,12 @@ const Hero = () => {
         <div className='flex w-full h-full flex-col'>
             <div className='flex flex-col h-1/3 w-screen'>
                 {/* center them, size of 8xl */}
-                <h1 id='intro' className='flex justify-center text-8xl text-white pt-12'>
+                <h1 id='intro' className='flex justify-center text-7xl text-white pt-12'>
                     Hi, I'm Sehej Brar
                 </h1>
                 
                 {/* center them, size of 6xl, margin 10 and padding 2 */}
-                <h2 className='flex justify-center text-6xl text-white pt-8'> {/*style={{"display": "flex"}}*/}
+                <h2 className='flex justify-center text-5xl text-white pt-8'> {/*style={{"display": "flex"}}*/}
                     <div ref={titleRef}></div>
                     <div id='cursor'>|</div>
                 </h2>
