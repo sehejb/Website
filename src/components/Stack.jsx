@@ -30,29 +30,30 @@ function randomNum(min, max) {
     return random
 }
 
-function Ball({ballPosRef, bowlSize, img}) {
+function Ball({ballPosRef, bowlSize, img, docs}) {
     const ballRef = useRef()
 
-    console.log(bowlSize)
-
     useEffect(() => {
-        ballPosRef.current.push({x:randomNum(0, bowlSize[0] - 80), y:randomNum(0, bowlSize[1] - 80), sX: randomNum(-6, 6), sY: randomNum(-4, 4), el:ballRef.current})
+        ballPosRef.current.push({x:randomNum(0, bowlSize[0] - 100), y:randomNum(0, bowlSize[1] - 100), sX: randomNum(-6, 6), sY: randomNum(-4, 4), el:ballRef.current})
     }, [])
 
     return(
         <div id="ball" ref={ballRef} className="absolute w-20 h-20 rounded-full">
-            <img src={img} className='h-full w-full object-contain'/>
+            <a href={docs}>
+                <img src={img} className='h-full w-full object-contain'/>
+            </a>
         </div>
     )
 }
 
-const Cards = () => {
+const Stack = () => {
     const bowlRef = useRef()
 
     const ballPosRef = useRef([])
     let bowlSize = []
 
-    const links = ["https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", 
+    const links = [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", 
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
@@ -62,7 +63,21 @@ const Cards = () => {
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
         "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        "https://www.cleanpng.com/png-risc-v-reduced-instruction-set-computer-instructio-1803711/"
+        "/risc-v.png"
+    ]
+
+    const docs = [
+        "https://docs.oracle.com/en/java/",
+        "https://en.cppreference.com/w/c/language",
+        "https://docs.python.org/3/",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        "https://react.dev/learn",
+        "https://dev.mysql.com/doc/",
+        "https://www.mongodb.com/docs/",
+        "https://learn.microsoft.com/en-us/sql/sql-server/?view=sql-server-ver16",
+        "https://firebase.google.com/docs",
+        "http://tailwindcss.com/docs/",
+        "https://github.com/riscv/riscv-isa-manual"
     ]
 
     useEffect(() => {
@@ -82,13 +97,13 @@ const Cards = () => {
     
     return (
         <div className="flex h-full w-full">
-            <div ref={bowlRef} className="relative h-full w-full border-white border-2">
+            <div ref={bowlRef} className="relative h-full w-full border-white">
                 {links.map((item, i) => (
-                    <Ball key={i} ballPosRef={ballPosRef} bowlSize={bowlSize} img={item}/>
+                    <Ball key={i} ballPosRef={ballPosRef} bowlSize={bowlSize} img={item} docs={docs[i]}/>
                 ))}
             </div>
         </div>
     )
 }
 
-export default Cards;
+export default Stack;
