@@ -15,27 +15,28 @@ function Move(ballPosRef, bowlSize) {
         }
 
         gsap.set(item['el'], {x: Math.round(item['x']), y: Math.round(item['y'])})
-
-        console.log(ballPosRef.current)
     })
 } 
 
 // min inclusive, max exclusive
 function randomNum(min, max) {
     let random = 0
+    let epsilon = 0.5
 
-    while (random == 0) {
+    while (Math.abs(random) < epsilon) {
         random = Math.random() * (max - min)
     }
 
     return random
 }
 
-function Ball({ballPosRef, img}, bowlSize) {
+function Ball({ballPosRef, bowlSize, img}) {
     const ballRef = useRef()
 
+    console.log(bowlSize)
+
     useEffect(() => {
-        ballPosRef.current.push({x:randomNum(0, bowlSize[0]), y:randomNum(0, bowlSize[1]), sX: randomNum(-6, 6), sY: randomNum(-4, 4), el:ballRef.current})
+        ballPosRef.current.push({x:randomNum(0, bowlSize[0] - 80), y:randomNum(0, bowlSize[1] - 80), sX: randomNum(-6, 6), sY: randomNum(-4, 4), el:ballRef.current})
     }, [])
 
     return(
@@ -69,8 +70,8 @@ const Cards = () => {
     return (
         <div className="flex h-full w-full">
             <div ref={bowlRef} className="relative h-full w-full border-white border-2">
-                <Ball ballPosRef={ballPosRef} bowlSize={bowlRef} img='/react.png'/>
-                <Ball ballPosRef={ballPosRef} img='/pytorch.png'/>
+                <Ball ballPosRef={ballPosRef} bowlSize={bowlSize} img='/react.png'/>
+                <Ball ballPosRef={ballPosRef} bowlSize={bowlSize} img='/pytorch.png'/>
             </div>
         </div>
     )
