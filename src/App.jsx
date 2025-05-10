@@ -16,7 +16,7 @@ const App = () => {
         <About/>
       </div>
 
-      <div>
+      <div className="h-screen w-screen">
         <Cards/>
       </div>
         
