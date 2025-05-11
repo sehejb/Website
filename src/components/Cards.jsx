@@ -11,18 +11,34 @@ const Cards =() => {
 
     useEffect(() => {
         const cards = gsap.utils.toArray(".card")
+
         cards.forEach((card, i) => (
-            gsap.set(card, {y: window.innerHeight, rotate: rots[i], translateY: yVals[i], zIndex: i})
+            gsap.set(card, {rotate: rots[i], translateY: yVals[i], zIndex: i, position: "absolute"})
         ))
+
+        cards.forEach((card, i) => {
+            if (i == 0) {return}
+            gsap.to(card, {
+                y: 500000,
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: card,
+                    scrub: 1,
+                    start: "top top",
+                    end: "bottom center"
+                }
+            })
+        })
     }, [])
 
     return (
-        <div className="flex w-full h-full relative justify-center items-center overflow-hidden">
+        <div className="work-exp flex w-full h-full relative justify-center items-center">        
             {descs.map((item, i) => (
-                <div key={i} className="card flex absolute h-3/4 w-3/4 bg-white rounded-3xl items-center">
+                <div key={i} className="card flex absolute h-5/6 w-5/6 bg-white rounded-3xl items-center">
                     {item}
                 </div>
             ))}
+            <div style={{ height: "2500px" }} />
         </div>
     )
 }
