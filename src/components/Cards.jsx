@@ -33,13 +33,13 @@ const Cards =() => {
         gsap.ticker.lagSmoothing(0)
 
         cards.current.forEach((card, i) => (
-            gsap.set(card, {rotate: rots[i], y: window.innerHeight, translateY: yVals[i], zIndex: cards.current.length - i})
+            gsap.set(card, {rotate: rots[i], y: i == 0 ? 0: window.innerHeight, translateY: yVals[i], zIndex: i})
         ))
 
         const scrollTrigger = ScrollTrigger.create({
             trigger: ".work-exp",
             start: "top top",
-            end: () => `+=${window.innerHeight * cards.current.length}`,
+            end: () => `+=${window.innerHeight * (cards.current.length - 1)}`,
             pin: true,
             pinSpacing: true,
             scrub: 1,
@@ -50,6 +50,7 @@ const Cards =() => {
                 const progressPerCard = 1 / totalCards
                 
                 cards.current.forEach((card, index) => {
+                    if (index == 0) {return}
                     const cardStart = index * progressPerCard
                     let cardProgress = (progress - cardStart) / progressPerCard
                     cardProgress = Math.min(Math.max(cardProgress, 0), 1)
@@ -65,8 +66,8 @@ const Cards =() => {
                             flyProgress = Math.min(Math.max(flyProgress, 0), 1)
  
                             const distanceMultipler = 1 - index * 0.1
-                            xPos = -window.innerWidth * 0.4 * distanceMultipler * flyProgress
-                            yPos = -window.innerHeight * 0.4 * distanceMultipler * flyProgress
+                            xPos = -window.innerWidth * 0.2 * distanceMultipler * flyProgress
+                            yPos = -window.innerHeight * 0.2 * distanceMultipler * flyProgress
                         }
                     }
 
@@ -119,17 +120,12 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className='work-exp flex w-full h-full relative justify-center items-center overflow-hidden'>
-            {/* {descs.map((item, i) => (
-                <div key={i} className="card flex absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center">
+        <div className='work-exp flex w-full h-screen relative justify-center items-center overflow-hidden bg-black'>
+            {descs.map((item, i) => (
+                <div key={i} className="card flex absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center text-8xl">
                     {item}
                 </div>
-            ))} */}
-            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>1</div>
-            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>2</div>
-            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>3</div>
-            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>4</div>
-            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>5</div>
+            ))}
         </div>
     )
 }
