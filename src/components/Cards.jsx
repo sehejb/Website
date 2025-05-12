@@ -1,167 +1,137 @@
-import React, { useEffect, useRef } from 'react';
-import Lenis from '@studio-freight/lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from '@studio-freight/lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { useEffect, useRef } from 'react'
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
-const Cards = () => {
-    const rots = [4, -2, 1, -4, 1.5]; // Rotation for each card
-    const yVals = [-20, -10, 0, 10, 20]; // Initial Y offset for fanning effect
+const Cards =() => {
+    const descs = ["Old Card", "Two Card", "Three Card", "Four Card", "New Card"]
+    const rots = [4, -2, 1, -4, 1.5]
+    const yVals = [-20, -10, 0, 10, 20]
 
-    // Ref for the main container, though not strictly necessary for this GSAP setup
-    const workExpRef = useRef(null);
-    // Ref to store the Lenis instance for cleanup
-    const lenisRef = useRef(null);
-    // Ref to store the GSAP ticker callback for cleanup
-    const tickerCallbackRef = useRef(null);
-    // Ref to store the ScrollTrigger instance for cleanup
-    const scrollTriggerInstanceRef = useRef(null);
-    // Ref to store card elements
-    const cardsRef = useRef([]);
-
+    // refs for clean up
+    const lenisRef = useRef()
+    const ticker = useRef()
+    const scroll = useRef()
+    const cards = useRef([])
 
     useEffect(() => {
-        // Select card elements and store them
-        cardsRef.current = gsap.utils.toArray(".card");
-        const localCards = cardsRef.current; // Use a local variable for safety within this effect
+        cards.current = gsap.utils.toArray(".card")
 
-        if (localCards.length === 0) {
-            console.warn("No cards found for animation.");
-            return;
+        const lenis = new Lenis()
+        lenisRef.current = lenis
+        lenis.on("scroll", ScrollTrigger.update)
+
+        const gsapTicker = (time) => {
+            lenis.raf(time * 1000)
         }
 
-        // Initialize Lenis for smooth scrolling
-        const lenis = new Lenis();
-        lenisRef.current = lenis; // Store for cleanup
+        ticker.current = gsapTicker
 
-        // Update ScrollTrigger on Lenis scroll
-        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add(gsapTicker)
+        gsap.ticker.lagSmoothing(0)
 
-        // Add Lenis raf to GSAP ticker
-        const tickerCb = (time) => {
-            lenis.raf(time * 1000); // Lenis expects time in milliseconds
-        };
-        tickerCallbackRef.current = tickerCb; // Store for cleanup
-        gsap.ticker.add(tickerCb);
-        gsap.ticker.lagSmoothing(0); // Disable GSAP's lag smoothing
+        cards.current.forEach((card, i) => (
+            gsap.set(card, {rotate: rots[i], y: window.innerHeight, translateY: yVals[i], zIndex: cards.current.length - i})
+        ))
 
-        // Initial setup for each card's position and style
-        localCards.forEach((card, i) => {
-            gsap.set(card, {
-                rotate: rots[i % rots.length], // Use modulo for safety if arrays mismatch
-                y: window.innerHeight,         // Start at the bottom of the viewport
-                translateY: yVals[i % yVals.length], // Apply fanning offset
-                zIndex: localCards.length - i,  // Stacking order (topmost card is the last one initially)
-                // position: "absolute" is already set by Tailwind className 'absolute'
-            });
-        });
-
-        // Create the ScrollTrigger animation
-        const st = ScrollTrigger.create({
-            trigger: workExpRef.current, // Use ref for the trigger element
-            start: "top top",            // Animation starts when the top of .work-exp hits the top of the viewport
-            // Pin the .work-exp container for the duration of the scroll animation
+        const scrollTrigger = ScrollTrigger.create({
+            trigger: ".work-exp",
+            start: "top top",
+            end: () => `+=${window.innerHeight * cards.current.length}`,
             pin: true,
-            pinSpacing: true, // Add padding to the bottom of the pinned element to make space for the scroll
-            // Scrub smoothly links the animation progress to scrollbar position
+            pinSpacing: true,
             scrub: 1,
-            // markers: true, // Uncomment for debugging ScrollTrigger start/end points
-            // Total scroll distance for the animation: (number of cards) * viewport height
-            // Each card effectively gets one viewport height of scroll to animate fully.
-            end: () => `+=${window.innerHeight * localCards.length}`,
+            markers:true,
             onUpdate: (self) => {
-                const progress = self.progress; // Overall progress of the ScrollTrigger (0 to 1)
-                const totalCards = localCards.length;
-                const progressPerCard = 1 / totalCards; // Progress allocated to each card's main animation
+                const progress = self.progress
+                const totalCards = cards.current.length
+                const progressPerCard = 1 / totalCards
+                
+                cards.current.forEach((card, index) => {
+                    const cardStart = index * progressPerCard
+                    let cardProgress = (progress - cardStart) / progressPerCard
+                    cardProgress = Math.min(Math.max(cardProgress, 0), 1)
 
-                localCards.forEach((card, index) => {
-                    // cardStart is the ScrollTrigger progress point where this card begins its main animation
-                    const cardStartProgress = index * progressPerCard;
-                    // cardProgress calculates the individual progress for the current card's main animation (0 to 1)
-                    let cardAnimationProgress = (progress - cardStartProgress) / progressPerCard;
-                    cardAnimationProgress = Math.min(Math.max(cardAnimationProgress, 0), 1); // Clamp between 0 and 1
+                    let yPos = window.innerHeight * (1 - cardProgress)
+                    let xPos = 0
 
-                    // Primary animation: move card from bottom to its "stacked" position
-                    // yPos goes from window.innerHeight (bottom) to 0 (top of its slot) as cardAnimationProgress goes 0 to 1
-                    let yPos = window.innerHeight * (1 - cardAnimationProgress);
-                    let xPos = 0; // Default horizontal position
+                    if (cardProgress === 1 && index < totalCards - 1) {
+                        const currProgress = (index + 1) * progressPerCard
 
-                    // "Fly off" animation for cards that have completed their primary stacking animation
-                    // This happens if the card is fully stacked (cardAnimationProgress === 1) and it's not the last card
-                    if (cardAnimationProgress === 1 && index < totalCards - 1) {
-                        // currentCardEndProgress is the ScrollTrigger progress point where this card finished its main animation
-                        const currentCardEndProgress = (index + 1) * progressPerCard;
-
-                        // Check if the overall scroll has progressed beyond this card's main animation phase
-                        if (progress > currentCardEndProgress) {
-                            // flyOffProgress calculates how far (0 to 1) this card should be in its "fly off" animation
-                            // The fly-off happens over the duration of one "progressPerCard" slot
-                            let flyOffProgress = (progress - currentCardEndProgress) / progressPerCard;
-                            flyOffProgress = Math.min(Math.max(flyOffProgress, 0), 1); // Clamp 0-1
-
-                            const distanceMultiplier = 1 - (index * 0.1); // Earlier cards fly off slightly more/faster
-                            
-                            // Cards fly off to the top-left
-                            xPos = -window.innerWidth * 0.4 * distanceMultiplier * flyOffProgress;
-                            // yPos for fly-off is relative to its stacked position (which was y=0 effectively)
-                            // So, a negative yPos moves it further up and off-screen.
-                            yPos = -window.innerHeight * 0.4 * distanceMultiplier * flyOffProgress;
+                        if (progress > currProgress) {
+                            let flyProgress = (progress - currProgress) / progressPerCard
+                            flyProgress = Math.min(Math.max(flyProgress, 0), 1)
+ 
+                            const distanceMultipler = 1 - index * 0.1
+                            xPos = -window.innerWidth * 0.4 * distanceMultipler * flyProgress
+                            yPos = -window.innerHeight * 0.4 * distanceMultipler * flyProgress
                         }
                     }
-                    
-                    // Apply the calculated transformations to the card
+
                     gsap.to(card, {
                         y: yPos,
                         x: xPos,
-                        duration: 0.1, // A small duration can help with scrub smoothness
-                        ease: "none"   // Linear easing as scrub handles the timing
-                    });
-                });
+                        duration: 0.1,
+                        ease: "none"
+                    })
+                })
             }
-        });
-        scrollTriggerInstanceRef.current = st; // Store for cleanup
+        })
 
-        // Refresh ScrollTrigger on resize to recalculate dimensions
-        // Lenis also needs to be aware of resize for its calculations
+        scroll.current = scrollTrigger
+
         const handleResize = () => {
             if (lenisRef.current) {
                 lenisRef.current.resize();
             }
             ScrollTrigger.refresh();
         };
+
         window.addEventListener('resize', handleResize);
 
+        return () => {
+            window.removeEventListener('resize', handleResize)
 
-        // Cleanup function: This is crucial for React components
-        
-    }, []); // Empty dependency array ensures this effect runs only once on mount and cleans up on unmount
+            if (ticker.current) {
+                gsap.ticker.remove(ticker.current);
+                ticker.current = null;
+            }
+
+            if (scroll.current) {
+                scroll.current.kill();
+                scroll.current = null;
+            }
+            
+            if (cards.current && cards.current.length > 0) {
+                cards.current.forEach(card => {
+                    if (card) gsap.killTweensOf(card);
+                });
+            }
+
+            if (lenisRef.current) {
+                lenisRef.current.destroy(); // Clean up Lenis instance
+                lenisRef.current = null;
+            }
+        }
+
+    }, [])
 
     return (
-        // The main container for the card animation.
-        // `h-screen` gives it full viewport height, essential for `pin:true` to work correctly.
-        // `workExpRef` is used as the trigger for ScrollTrigger.
-        <div ref={workExpRef} className='work-exp w-full h-screen relative flex justify-center items-center overflow-hidden bg-gray-800'>
-            {/* Static cards for the animation. Ensure they have unique keys if mapped. */}
-            <div className='card absolute h-5/6 w-5/6 bg-gradient-to-br from-green-500 to-green-700 rounded-3xl flex justify-center items-center text-white text-4xl font-bold shadow-2xl will-change-transform p-8'>
-                Card 1: Project Alpha
-            </div>
-            <div className='card absolute h-5/6 w-5/6 bg-gradient-to-br from-blue-500 to-blue-700 rounded-3xl flex justify-center items-center text-white text-4xl font-bold shadow-2xl will-change-transform p-8'>
-                Card 2: Service Beta
-            </div>
-            <div className='card absolute h-5/6 w-5/6 bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl flex justify-center items-center text-white text-4xl font-bold shadow-2xl will-change-transform p-8'>
-                Card 3: Feature Gamma
-            </div>
-            <div className='card absolute h-5/6 w-5/6 bg-gradient-to-br from-red-500 to-red-700 rounded-3xl flex justify-center items-center text-white text-4xl font-bold shadow-2xl will-change-transform p-8'>
-                Card 4: Platform Delta
-            </div>
-            <div className='card absolute h-5/6 w-5/6 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-3xl flex justify-center items-center text-white text-4xl font-bold shadow-2xl will-change-transform p-8'>
-                Card 5: Initiative Epsilon
-            </div>
+        <div className='work-exp flex w-full h-full relative justify-center items-center overflow-hidden'>
+            {/* {descs.map((item, i) => (
+                <div key={i} className="card flex absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center">
+                    {item}
+                </div>
+            ))} */}
+            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>1</div>
+            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>2</div>
+            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>3</div>
+            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>4</div>
+            <div className='card absolute h-5/6 w-5/6 bg-green-600 rounded-3xl items-center will-change-transform'>5</div>
         </div>
-    );
-};
+    )
+}
 
-
-export default Cards; // Export App as default to render the whole page
-// If you only want to export Cards, change to: export default Cards;
+export default Cards;
