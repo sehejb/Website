@@ -47,33 +47,32 @@ const Cards =() => {
             onUpdate: (self) => {
                 const progress = self.progress
                 const totalCards = cards.current.length
-                const progressPerCard = 1 / totalCards
+                const progressPerCard = 1 / (totalCards - 1)
                 
                 cards.current.forEach((card, index) => {
                     if (index == 0) {return}
-                    const cardStart = index * progressPerCard
+                    const cardStart = (index - 1) * progressPerCard
                     let cardProgress = (progress - cardStart) / progressPerCard
                     cardProgress = Math.min(Math.max(cardProgress, 0), 1)
 
                     let yPos = window.innerHeight * (1 - cardProgress)
-                    let xPos = 0
 
                     if (cardProgress === 1 && index < totalCards - 1) {
-                        const currProgress = (index + 1) * progressPerCard
+                        const currProgress = index * progressPerCard
 
                         if (progress > currProgress) {
                             let flyProgress = (progress - currProgress) / progressPerCard
                             flyProgress = Math.min(Math.max(flyProgress, 0), 1)
  
-                            const distanceMultipler = 1 - index * 0.1
-                            xPos = -window.innerWidth * 0.2 * distanceMultipler * flyProgress
-                            yPos = -window.innerHeight * 0.2 * distanceMultipler * flyProgress
+                            const distanceMultipler = 1 - index * 0.05
+                            yPos = -window.innerHeight * 0.025 * distanceMultipler * flyProgress
+                        } else {
+                            yPos = 0
                         }
                     }
 
                     gsap.to(card, {
                         y: yPos,
-                        x: xPos,
                         duration: 0.1,
                         ease: "none"
                     })
