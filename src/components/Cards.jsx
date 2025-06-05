@@ -9,9 +9,9 @@ const Cards =() => {
     const cardInfo = [
         {
             company: "My Experience",
-            time: "-",
             desc: "I’m a software developer who enjoys building thoughtful, practical tools — whether it’s real-time interfaces for research labs or internal platforms that help teams work better. I like clean design, clear logic, and code that does its job well.\n\nYou can learn more about what I’ve worked on over on LinkedIn.",
-            img: "/risc-v.png"
+            img: "/risc-v.png",
+            button: "LinkedIn"
         },
 
         {
@@ -39,20 +39,13 @@ const Cards =() => {
         },
 
         {
-            company: "Curious to see more?",
-            role: "-",
-            time: "-",
+            company: "Curious to See More?",
             desc: "If you’ve made it this far, you might want to check out some of the other things I’ve built.\nClick below to explore more projects, experiments, and work I’m proud of.",
-            img: "/risc-v.png"
+            img: "/risc-v.png",
+            button: "See My Projects"
         }
     ]
 
-    const descs = ["I’m a software developer who enjoys building thoughtful, practical tools — whether it’s real-time interfaces for research labs or internal platforms that help teams work better. I like clean design, clear logic, and code that does its job well.\n\nYou can learn more about what I’ve worked on over on LinkedIn.",
-        "I joined the Otipemisiwak Government as a cybersecurity intern tasked with enhancing digital safety protocols and reducing organizational risk. Over the course of the summer, I authored a comprehensive 54-page security policy, outlining best practices for software maintenance, data protection, and incident response procedures. This document became a foundational guide for both technical teams and leadership.",
-        "My role also included conducting detailed vulnerability assessments across internal systems and infrastructure. I worked closely with the IT and security teams to surface potential risks, map them to mitigation strategies, and deliver formal technical reports to stakeholders.\nTo support email threat detection, I built a DMARC log parser using Python and PyTorch. This tool automated the classification of suspicious email activity, reducing manual review time by more than 85% and increasing the team’s responsiveness to potential phishing or spoofing attacks.",
-        "After my cybersecurity term, I continued on as a software developer—shifting focus toward internal platforms, workflow automation, and web tooling. I was responsible for building a custom intranet using React, JavaScript, and SPFx, deployed within SharePoint to streamline communication and daily operations for a 400+ person organization. This included designing interactive widgets, dashboard modules, and role-based views for employees and managers.\nI also developed and launched an e-commerce website for a partner organization, integrating with their payment and inventory systems. The result was a cleaner user experience and a 2.5× increase in online transactions.\nMore recently, I’ve focused on automating repetitive asset management processes. I used Selenium to script asset collection flows—eliminating the need for manual data entry—and used Pandas to clean and normalize datasets for ingestion into AssetWasp, ensuring consistent record-keeping across departments. These tools helped reduce admin overhead and ensured cleaner asset lifecycles from collection to registration.",
-        "From January 2025 onwards, I worked as a Software Engineer in a fluid dynamics research lab at the Canadian Center for Welding and Joining, where I designed and developed a real-time measurement and visualization platform using PyQt6. The application was built to interface with a drawer-based experimental system used to measure fluid flow and droplet formation under varying physical conditions. As soon as the drawer was closed, the system automatically began collecting data—calculating parameters like flow rate and sheath velocity on the fly based on sensor readings and drawer status.\nThe platform featured a fully custom GUI with real-time plotting capabilities, allowing researchers to monitor system behavior as experiments ran. I implemented a robust serial communication layer between the GUI and Arduino-based hardware, parsing continuous data streams and filtering out noise in real time. To maintain responsiveness and stability under high-frequency logging, I employed QThreads and Qt’s signal-slot architecture, ensuring that the data acquisition and processing pipeline remained isolated from the main UI thread. The system also handled dynamic status monitoring, automatic start/stop control based on drawer position, and multi-step processing for calculating flow characteristics.\nBeyond visualization, I built tools for exporting filtered, structured data to CSV—allowing researchers to conduct post-experiment analysis with minimal manual cleanup. The architecture was modular and extensible, enabling easy integration of new sensors or algorithmic logic down the line. While I supported early exploration of migrating lower-level components to C for direct hardware control, my primary role centered on building a technically sound, multithreaded, and user-focused PyQt6 interface tailored to the needs of experimental fluid dynamics research.",
-        "If you’ve made it this far, you might want to check out some of the other things I’ve built.\nClick below to explore more projects, experiments, and work I’m proud of."]
     let  rots = [4, -2, 1, -4, 1.5]
     rots = [0, 0, 0, 0, 0]
     const yVals = [-20, -10, 0, 10, 20]
@@ -167,12 +160,23 @@ const Cards =() => {
 
     return (
         <div className='work-exp flex w-full h-screen relative justify-center items-center overflow-hidden bg-black'>
-            {descs.map((item, i) => (
+            {cardInfo.map((card, i) => (
                 <div key={i} className="card flex absolute h-5/6 w-5/6 rounded-3xl">
-                    <div className={`flex-1 p-12 ${i % 2 === 0 ? 'bg-gray-500' : 'order-last bg-white'}`}>
-                        {item}
+                    <div className={`w-1/2 p-12 ${i % 2 === 0 ? 'bg-gray-500' : 'order-last bg-white'}`}>
+                        <div className='text-4xl'>
+                            {card.company}
+                        </div>
+                        <div className='text-2xl'>
+                            {card?.time}
+                        </div>
+                        <div className='text-xl'>
+                            {card?.role}
+                        </div>
+
+                        <div>{card.desc}</div>
+                        
                     </div>
-                    <img src='/risc-v.png' className={`flex-1 ${i % 2 == 0 ? 'bg-white' : 'bg-gray-500'}`}></img>
+                    <img src='/risc-v.png' className={`w-1/2 ${i % 2 == 0 ? 'bg-white' : 'bg-gray-500'}`}></img>
                 </div>
             ))}
         </div>
