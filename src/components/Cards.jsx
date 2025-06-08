@@ -18,7 +18,7 @@ const Cards =() => {
             company: "Otipemisiwak Métis Government",
             role: "Cybersecurity Analyst",
             time: "May 2024 - Sept. 2024",
-            desc:"I joined the Otipemisiwak Government as a cybersecurity intern tasked with enhancing digital safety protocols and reducing organizational risk. Over the course of the summer, I authored a comprehensive 54-page security policy, outlining best practices for software maintenance, data protection, and incident response procedures. This document became a foundational guide for both technical teams and leadership.",
+            desc: "I joined the Otipemisiwak Government as a cybersecurity intern tasked with enhancing digital safety protocols and reducing organizational risk. Over the course of the summer, I authored a comprehensive 54-page security policy, outlining best practices for software maintenance, data protection, and incident response procedures. This document became a foundational guide for both technical teams and leadership.\nBeyond policy development, I also played a key role in understanding and fortifying our digital environment. I meticulously mapped the organization's network infrastructure, gaining a deep understanding of its topology, identifying critical assets, and pinpointing potential vulnerabilities. This process was crucial for enhancing network visibility, improving segmentation strategies, and optimizing the placement of security controls. I also contributed to daily IT operations and user support, troubleshooting technical issues, and providing guidance on secure computing practices. This hands-on experience offered valuable insights into end-user behavior and helped refine our security awareness initiatives, ensuring operational continuity while upholding security standards. Furthermore, my role extended to supporting technology procurement, where I assisted in evaluating new systems and software to ensure they met the organization's security requirements and strategic objectives. I also played a part in managing relationships with external technological vendors, conducting due diligence on their security postures, and ensuring that service level agreements aligned with our overall risk mitigation strategies.",
             img: "/risc-v.png"
         },
 
@@ -159,24 +159,17 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className='work-exp flex w-full h-screen relative justify-center items-center overflow-hidden bg-black'>
+        <div className='work-exp flex w-full h-screen relative justify-center items-center bg-black'>
             {cardInfo.map((card, i) => (
-                <div key={i} className="card flex absolute h-5/6 w-5/6 rounded-3xl">
-                    <div className={`w-1/2 p-12 ${i % 2 === 0 ? 'bg-gray-500' : 'order-last bg-white'}`}>
-                        <div className='text-4xl'>
-                            {card.company}
-                        </div>
-                        <div className='text-2xl'>
-                            {card?.time}
-                        </div>
-                        <div className='text-xl'>
-                            {card?.role}
-                        </div>
-
-                        <div>{card.desc}</div>
-                        
+                <div key={i} className="card flex absolute h-5/6 w-5/6">
+                    <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${i % 2 === 0 ? 'bg-gray-300' : 'bg-white order-last'}`}>
+                        <div className='text-5xl font-semibold'>{card.company}</div>
+                        <div className='text-2xl text-gray-600'>{card.time}</div>
+                        <div className='text-xl text-gray-700 italic'>{card.role}</div>
+                        <div className='text-md text-gray-700 leading-relaxed'>{card.desc}</div>
                     </div>
-                    <img src='/risc-v.png' className={`w-1/2 ${i % 2 == 0 ? 'bg-white' : 'bg-gray-500'}`}></img>
+
+                    <img src='/risc-v.png' className={`w-1/2 ${i % 2 == 0 ? 'bg-white order-first' : 'bg-gray-300'}`}></img>
                 </div>
             ))}
         </div>
