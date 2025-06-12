@@ -2,6 +2,8 @@ import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from 'react'
+import {Form, Input, Button} from "@heroui/react";
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -180,6 +182,12 @@ const Cards =() => {
                     <img src={card.img} className={`w-1/2 h-full object-cover ${i % 2 === 0 ? 'order-last' : ''}`}></img>
                 </div>
             ))}
+
+            <Form>
+                <Input isRequired errorMessage="Please enter your email." 
+                label="Email" labelPlacement="outside" name="email" 
+                placeholder="Enter your email" type="email"></Input>
+            </Form>
         </div>
     )
 }
