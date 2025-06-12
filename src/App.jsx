@@ -20,10 +20,6 @@ const App = () => {
       <div className="h-screen w-screen bg-black">
         <Cards/>
       </div>
-
-      <div className="h-screen w-screen bg-black">
-        <Contact/>
-      </div>
         
     </main>
   );

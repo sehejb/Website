@@ -2,8 +2,7 @@ import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from 'react'
-import {Form, Input, Button} from "@heroui/react";
-
+import Contact from './Contact'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -168,26 +167,25 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className='work-exp flex w-full h-screen relative justify-center items-center bg-black'>
-            {cardInfo.map((card, i) => (
-                <div key={i} className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
-                    <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${card.color} ${i % 2 === 0 ? '' : 'order-last'}`}>
-                        <div className='text-5xl font-semibold'>{card.company}</div>
-                        <div className='text-2xl text-gray-600'>{card.time}</div>
-                        <div className='text-xl text-gray-700 italic'>{card.role}</div>
-                        <div className='text-md text-gray-700 leading-relaxed'>{card.desc}</div>
-                        {card.button && (<a href={card.link}><button>{card.button}</button></a>)}
+        <div className="w-screen h-screen bg-black">
+            <div className='work-exp flex w-full h-screen relative justify-center items-center bg-black'>
+                {cardInfo.map((card, i) => (
+                    <div key={i} className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
+                        <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${card.color} ${i % 2 === 0 ? '' : 'order-last'}`}>
+                            <div className='text-5xl font-semibold'>{card.company}</div>
+                            <div className='text-2xl text-gray-600'>{card.time}</div>
+                            <div className='text-xl text-gray-700 italic'>{card.role}</div>
+                            <div className='text-md text-gray-700 leading-relaxed'>{card.desc}</div>
+                            {card.button && (<a href={card.link}><button>{card.button}</button></a>)}
+                        </div>
+
+                        <img src={card.img} className={`w-1/2 h-full object-cover ${i % 2 === 0 ? 'order-last' : ''}`}></img>
                     </div>
+                ))}  
+            </div>
 
-                    <img src={card.img} className={`w-1/2 h-full object-cover ${i % 2 === 0 ? 'order-last' : ''}`}></img>
-                </div>
-            ))}
+            <Contact/>
 
-            <Form>
-                <Input isRequired errorMessage="Please enter your email." 
-                label="Email" labelPlacement="outside" name="email" 
-                placeholder="Enter your email" type="email"></Input>
-            </Form>
         </div>
     )
 }
