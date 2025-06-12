@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, OrbitControls, useTexture, useAnimations } from '@react-three/drei';
 import { DoubleSide } from 'three';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui/react';
 
 gsap.registerPlugin(TextPlugin)
 

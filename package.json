@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",
-    "@nextui-org/react": "^2.6.11",
+    "@heroui/react": "^2.7.10",
     "@react-three/drei": "^9.91.1",
     "@react-three/fiber": "^8.15.3",
     "@studio-freight/lenis": "^1.0.42",

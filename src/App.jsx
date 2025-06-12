@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Cards from "./components/Cards";
+import Contact from "./components/Contact"
 
 const App = () => {
   return (
@@ -21,7 +22,7 @@ const App = () => {
       </div>
 
       <div className="h-screen w-screen bg-black">
-        Hello
+        <Contact/>
       </div>
         
     </main>
