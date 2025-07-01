@@ -159,8 +159,8 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className="w-screen h-full bg-black">
-            <div className='work-exp flex w-full h-[100vh] relative justify-center items-center bg-black'>
+        <div className="w-full h-full bg-black">
+            <div className='work-exp flex w-full h-4/6 relative justify-center items-center bg-black'>
                 {cardInfo.map((card, i) => (
                     <div key={i} className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
                         <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${card.color} ${i % 2 === 0 ? '' : 'order-last'}`}>
@@ -189,7 +189,7 @@ const Cards =() => {
                 <hr className="w-11/12 mx-auto justify-center border-gray-700 bg-black"/>
             </div>
 
-            <Footer className="w-full h-[50vh]"/>
+            <Footer className="w-full h-2/6"/>
         </div>
     )
 }
