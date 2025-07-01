@@ -2,7 +2,6 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Cards from "./components/Cards";
-import Contact from "./components/Contact"
 
 const App = () => {
   return (
@@ -17,7 +16,7 @@ const App = () => {
         <About/>
       </div>
 
-      <div className="h-screen w-screen bg-black">
+      <div className="h-[150vh] w-screen bg-black">
         <Cards/>
       </div>
         

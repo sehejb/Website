@@ -43,15 +43,6 @@ const Cards =() => {
             img: "/arduino.jpg",
             color: "bg-[#E6F4F1]"
         },
-
-        {
-            company: "Curious to See More?",
-            desc: "If you’ve made it this far, you might want to check out some of the other things I’ve built.\nClick below to explore more projects, experiments, and work I’m proud of.",
-            img: "/image.png",
-            button: "See My Projects",
-            color: "bg-[#FFF9E6]",
-            link: "www.github.com/sehejb"
-        }
     ]
 
     let  rots = [4, -2, 1, -4, 1.5]
@@ -182,10 +173,20 @@ const Cards =() => {
                         <img src={card.img} className={`w-1/2 h-full object-cover ${i % 2 === 0 ? 'order-last' : ''}`}></img>
                     </div>
                 ))}  
+                <div className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
+                    <div className="w-2/3 p-12 flex flex-col justify-center space-y-4 bg-[#FFF9E6]">
+                        <div className='text-5xl font-semibold'>Curious to See More?</div>
+                        <div className='text-md text-gray-700 leading-relaxed'>If you’ve made it this far, you might want to check out some of the other things I’ve built.\nClick below to explore more projects, experiments, and work I’m proud of.</div>
+                        <a href={"www.github.com/sehejb"}><button>See My Projects</button></a>
+                    </div>
+
+                    <Contact className="w-1/3 h-full bg-black object-cover"/>
+                </div>
             </div>
 
-            <Contact/>
-
+            <div className='bg-black text-white text-3xl'>
+               Thank you for visiting the website. 
+            </div>
         </div>
     )
 }
