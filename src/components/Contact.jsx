@@ -3,7 +3,8 @@ import { useForm } from '@formspree/react';
 
 
 const Contact = (() => {
-    const [state, handleSubmit] = useForm(process.env.FORMSPREE); // TODO: hide this in time
+    const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE); // TODO: hide this in time
+
 
     if (state.succeeded) {
       return <h2 className="text-black text-3xl">Thanks for your email! You can expect a response shortly.</h2>;
