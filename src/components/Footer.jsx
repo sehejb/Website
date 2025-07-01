@@ -34,7 +34,8 @@ const Footer = () => {
                 </div>
 
                 <div className="w-1/2 h-full bg-black">
-                    <h1 className='text-3xl text-white'>Hello</h1>
+                    <h1 className='text-4xl text-white'>Recent Commits</h1>
+                    {/* TODO: small cards here basically just having commit, time, message, hash, small card type almost like ios notifications */}
                 </div>
             </div>
         </div>
