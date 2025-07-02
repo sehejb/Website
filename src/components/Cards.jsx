@@ -159,8 +159,8 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className="w-full h-full bg-black">
-            <div className='work-exp flex w-full h-4/6 relative justify-center items-center bg-black'>
+        <div className="w-screen h-screen bg-black">
+            <div className='work-exp flex w-full h-[100vh] relative justify-center items-center bg-black'>
                 {cardInfo.map((card, i) => (
                     <div key={i} className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
                         <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${card.color} ${i % 2 === 0 ? '' : 'order-last'}`}>
@@ -177,7 +177,7 @@ const Cards =() => {
                 <div className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
                     <div className="w-2/3 p-12 flex flex-col justify-center space-y-4 bg-[#FFF9E6]">
                         <div className='text-5xl font-semibold'>Curious to See More?</div>
-                        <div className='text-md text-gray-700 leading-relaxed'>If you’ve made it this far, you might want to check out some of the other things I’ve built.\nClick below to explore more projects, experiments, and work I’m proud of.</div>
+                        <div className='text-md text-gray-700 leading-relaxed'>If you’ve made it this far, you might want to check out some of the other things I’ve built.rClick below to explore more projects, experiments, and work I’m proud of.</div>
                         <a href={"www.github.com/sehejb"}><button>See My Projects</button></a>
                     </div>
 
@@ -189,7 +189,7 @@ const Cards =() => {
                 <hr className="w-11/12 mx-auto justify-center border-gray-700 bg-black"/>
             </div>
 
-            <Footer className="w-full h-2/6"/>
+            <div className="w-full min-h-[50vh] bg-black"><Footer/></div>
         </div>
     )
 }

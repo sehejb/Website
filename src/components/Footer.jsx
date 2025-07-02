@@ -1,11 +1,12 @@
 import { SiGithub, SiLinkedin, SiMailboxdotorg} from 'react-icons/si';
+import Activity from "./Activity"
 
 const Footer = () => {
     return (
-        <div className="bg-black w-full h-full ">
+        <div className="bg-black w-screen min-h-[65vh] ">
             <h1 className="p-5 text-5xl text-white text-center">Thank You for Visiting</h1>
-            <div className='bg-black w-full h-full flex'>
-                <div className="w-1/2 h-full flex flex-col p-7">
+            <div className='bg-black w-full flex'>
+                <div className="w-1/2 flex flex-col p-7">
                     <h2 className="text-white text-4xl">Connect With Me!</h2>
                     
                     <a className='flex flex-row' href="https://github.com/sehejb" target="_blank" rel="noopener noreferrer">
@@ -35,6 +36,8 @@ const Footer = () => {
 
                 <div className="w-1/2 h-full bg-black">
                     <h1 className='text-4xl text-white'>Recent Commits</h1>
+                    <Activity/>
+                    
                     {/* TODO: small cards here basically just having commit, time, message, hash, small card type almost like ios notifications */}
                 </div>
             </div>

@@ -16,7 +16,7 @@ const App = () => {
         <About/>
       </div>
 
-      <div className="h-[150vh] w-screen bg-black">
+      <div className="h-screen w-screen bg-black">
         <Cards/>
       </div>
         
