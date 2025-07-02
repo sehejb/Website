@@ -1,7 +1,7 @@
 
 function ActivityCard() {
     return (
-        <div className="w-full h-1/3 bg-gray-500 p-7">
+        <div className="w-4/5 h-1/3 bg-gray-500 m-7">
             Hello
         </div>
     )
