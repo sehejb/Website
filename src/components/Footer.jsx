@@ -3,9 +3,9 @@ import Activity from "./Activity"
 
 const Footer = () => {
     return (
-        <div className="bg-black w-screen min-h-[65vh] ">
+        <div className="w-screen min-h-[65vh] ">
             <h1 className="p-5 text-5xl text-white text-center">Thank You for Visiting</h1>
-            <div className='bg-black w-full flex'>
+            <div className='w-full flex'>
                 <div className="w-1/2 flex flex-col p-7">
                     <h2 className="text-white text-4xl">Connect With Me!</h2>
                     
@@ -34,7 +34,7 @@ const Footer = () => {
                     </a>
                 </div>
 
-                <div className="w-1/2 h-full bg-black">
+                <div className="w-1/2 h-full">
                     <h1 className='text-4xl text-white'>Recent Commits</h1>
                     <Activity/>
                     

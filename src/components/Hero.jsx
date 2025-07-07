@@ -99,13 +99,13 @@ const Hero = () => {
 
                 <div className='flex justify-center gap-x-4 pt-10'>
                     <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] mr-10 rounded-full'>
-                        <div className='flex items-center justify-center h-full w-full bg-black rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
+                        <div className='flex items-center justify-center h-full w-full rounded-full text-2xl hover:shadow-xl hover:shadow-red-500/30'>
                             Get in Touch
                         </div>
                     </Button>
 
                     <Button className='w-[300px] h-[60px] bg-gradient-to-r from-purple-500 via-red-500 to-yellow-500 text-white p-[2.5px] rounded-full'>
-                        <div className='hover:shadow-lg hover:shadow-purple-500/25 flex h-full w-full items-center justify-center rounded-full bg-black text-white transition duration-300 ease-in-out hover:bg-gradient-to-br hover:from-gray-900 hover:to-gray-900/30 hover:transition hover:duration-300 hover:ease-in-out text-2xl'>
+                        <div className='hover:shadow-lg hover:shadow-purple-500/25 flex h-full w-full items-center justify-center rounded-full text-white transition duration-300 ease-in-out hover:bg-gradient-to-br hover:from-gray-900 hover:to-gray-900/30 hover:transition hover:duration-300 hover:ease-in-out text-2xl'>
                             About Me
                         </div>
                     </Button>

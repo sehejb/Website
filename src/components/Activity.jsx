@@ -10,7 +10,7 @@ function ActivityCard() {
 const Activity = () => {
     
     return (
-        <div className="w-full h-full bg-black">
+        <div className="w-full h-full">
             <ActivityCard/>
         </div>
     )

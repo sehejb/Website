@@ -3,7 +3,7 @@ const Navbar = () => {
     const nav = ["Home", "Projects", "Resume", "Contact"];
 
     return (
-        <div className="flex text-black text-2xl mt-5 pr-5 bg-black">
+        <div className="flex text-black text-2xl mt-5 pr-5">
             <a href="www.google.com" className="ml-5 text-white">
                 Sehej Brar
             </a>

@@ -159,8 +159,8 @@ const Cards =() => {
     }, [])
 
     return (
-        <div className="w-screen h-screen bg-black">
-            <div className='work-exp flex w-full h-[100vh] relative justify-center items-center bg-black'>
+        <div className="w-screen h-screen">
+            <div className='bg-black work-exp flex w-full h-[100vh] relative justify-center items-center'>
                 {cardInfo.map((card, i) => (
                     <div key={i} className="card flex absolute h-5/6 w-5/6 border border-[#E0E0E0]">
                         <div className={`w-1/2 p-12 flex flex-col justify-center space-y-4 ${card.color} ${i % 2 === 0 ? '' : 'order-last'}`}>
@@ -181,15 +181,15 @@ const Cards =() => {
                         <a href={"www.github.com/sehejb"}><button>See My Projects</button></a>
                     </div>
 
-                    <Contact className="w-1/3 h-full bg-black object-cover"/>
+                    <Contact className="w-1/3 h-full object-cover"/>
                 </div>
             </div>
 
             <div className='bg-black'>
-                <hr className="w-11/12 mx-auto justify-center border-gray-700 bg-black"/>
+                <hr className="w-11/12 mx-auto justify-center border-gray-700"/>
             </div>
 
-            <div className="w-full min-h-[50vh] bg-black"><Footer/></div>
+            <div className="bg-black w-full min-h-[50vh]"><Footer/></div>
         </div>
     )
 }
