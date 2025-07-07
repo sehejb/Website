@@ -2,18 +2,13 @@ import { useState } from "react"
 
 import { CiFolderOn } from "react-icons/ci";
 
-import { 
-  FaReact, FaAndroid, FaAngular, FaPython, FaJava, FaJsSquare, FaCss3, FaGitAlt 
-} from "react-icons/fa";
+import { FaReact, FaAndroid, FaAngular, FaPython, FaJava, FaJsSquare, FaCss3, FaGitAlt } from "react-icons/fa";
 
 import { VscVscode } from "react-icons/vsc";
 
 import { BiLogoVisualStudio } from "react-icons/bi";
 
-import { 
-  SiAndroidstudio, SiPytorch, SiJunit5, SiMongodb, SiPandas, SiNumpy, 
-  SiScikitlearn, SiC, SiNeo4J, SiAssemblyscript 
-} from "react-icons/si";
+import { SiAndroidstudio, SiPytorch, SiJunit5, SiMongodb, SiPandas, SiNumpy, SiScikitlearn, SiC, SiNeo4J, SiAssemblyscript } from "react-icons/si";
 
 import { IoLogoFirebase } from "react-icons/io5";
 
@@ -38,14 +33,14 @@ function Folder({data}) {
     return (
         <div>
             <div onClick={Enable} className="relative flex items-center">
-                <CiFolderOn className="h-20 w-20 text-white m-5"></CiFolderOn>
-                <h1 className="text-white text-4xl">{data.name}</h1>
+                <CiFolderOn className="h-16 w-16 text-white m-5"></CiFolderOn>
+                <h1 className="text-white text-3xl">{data.name}</h1>
             </div>
 
             {enabled && data.children.map((child, i) => (
-                <div key={i} className="flex items-center">
-                    {child.icon && <child.icon key={child.icon} className="h-12 w-12 text-white ml-20"/>}
-                    <h1 key={child.name} className="text-3xl text-white pl-5">{child.name}</h1>
+                <div key={i} className="flex items-center p-2">
+                    {child.icon && <child.icon key={child.icon} className="h-12 w-12 text-white ml-16"/>}
+                    <h1 key={child.name} className="text-2xl text-white pl-5">{child.name}</h1>
                 </div>    
             ))}
         </div>
@@ -108,8 +103,8 @@ const AboutMe = () => {
 
     return (
         <div className="w-full h-full">
-            <div className="w-2/5 h-full flex items-center justify-center">
-                <div className="w-5/6 h-[95vh] bg-[#1B1F29] rounded-xl">
+            <div className="w-2/5 h-full flex items-center ml-10">
+                <div className="w-2/3 h-[95vh] bg-[#1B1F29] rounded-xl overflow-y-auto">
                     <div className="w-full h-[7vh] bg-[#2F3748] rounded-t-xl flex items-center pl-5 text-3xl">
                         <h1 className="text-[#A3AEC0]">Explorer</h1>
                     </div>
