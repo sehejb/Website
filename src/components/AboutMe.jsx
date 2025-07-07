@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+import IDE from "./IDE"
+
 import { CiFolderOn } from "react-icons/ci";
 
 import { FaReact, FaAndroid, FaAngular, FaPython, FaJava, FaJsSquare, FaCss3, FaGitAlt } from "react-icons/fa";
@@ -102,9 +104,9 @@ const AboutMe = () => {
 ]
 
     return (
-        <div className="w-full h-full">
-            <div className="w-2/5 h-full flex items-center ml-10">
-                <div className="w-2/3 h-[95vh] bg-[#1B1F29] rounded-xl overflow-y-auto">
+        <div className="w-full h-full flex">
+            <div className="w-1/4 h-full flex items-center pl-10">
+                <div className="w-full h-[95vh] bg-[#1B1F29] rounded-xl overflow-y-auto">
                     <div className="w-full h-[7vh] bg-[#2F3748] rounded-t-xl flex items-center pl-5 text-3xl">
                         <h1 className="text-[#A3AEC0]">Explorer</h1>
                     </div>
@@ -112,6 +114,10 @@ const AboutMe = () => {
                         <Folder key={folder.name} data={folder}/>
                     ))}
                 </div>
+            </div>
+
+            <div className="w-3/4 flex h-full items-center justify-center pr-5">
+                <IDE/>
             </div>
         </div>
     )
