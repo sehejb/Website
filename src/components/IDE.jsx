@@ -1,6 +1,7 @@
 
 const IDE = () => {
     const navBar = ["File", "Edit", "Selection", "View", "···"]
+    const terminalNav = ["PROBLEMS", "OUTPUT", "DEBUG CONSOLE", "TERMINAL", "PORTS"]
     const tabs = ["index.html", "AboutMe.jsx", "main.jsx"]
     const descs = ["function AboutMe() {",
                     '  const name = "Sehej Brar";',
@@ -23,10 +24,21 @@ const IDE = () => {
                     "  return { name, education, focus, currentJob, projects, mindset, connect };",
                     "}"
                 ];
+    const gitPushOutput = ["PS C:\\Users\\sehej\\Website> git push origin main",
+                            "Enumerating objects: 9, done.",
+                            "Counting objects: 100% (9/9), done.",
+                            "Delta compression using up to 8 threads",
+                            "Compressing objects: 100% (5/5), done.",
+                            "Writing objects: 100% (5/5), 1.48 KiB | 379.00 KiB/s, done.",
+                            "Total 5 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0)",
+                            "remote: Resolving deltas: 100% (3/3), completed with 3 local objects.",
+                            "To https://github.com/sehejb/Website.git",
+                            "   2c02545..9fea7b3  main -> main",
+                            "PS C:\\Users\\sehej\\Website>"];
 
     return (
         <div className="bg-[#292C34] w-[95%] h-[95vh] rounded-xl">
-            <div className="flex flex-col bg-[#22252B] w-full h-[12vh] pt-2 rounded-t-xl">
+            <div className="flex flex-col bg-[#22252B] w-full h-[10vh] pt-2 rounded-t-xl">
                 <div className="w-full h-1/2 flex">
                     <ul className="w-1/3 h-full items-center justify-center flex">
                         {navBar.map((nav, i) => (
@@ -38,7 +50,7 @@ const IDE = () => {
                         <p className="text-3xl text-[#838896]">About Me</p>
                     </div>
 
-                    <div class="w-1/4 h-full text-[#838896] text-3xl flex justify-end pr-6 space-x-10">
+                    <div className="w-1/4 h-full text-[#838896] text-3xl flex justify-end pr-6 space-x-10">
                         <button>&#x2013;</button>
                         <button>&#x25A1;</button>
                         <button>&#x2715;</button>
@@ -53,7 +65,7 @@ const IDE = () => {
             </div>
             <p className="text-[#ABACAD] pl-5">{'src > components > AboutMe.jsx > AboutMe'}</p>
             
-           <div className="overflow-auto w-full h-[83vh] font-mono text-sm rounded-md">
+           <div className="overflow-auto font-mono text-sm rounded-md">
                 {descs.map((desc, i) => (
                     <div key={i} className="flex">
                         <div className="w-12 text-lg bg-[#292C34] text-gray-500 text-right pr-4 select-none border-r border-gray-700">
@@ -64,6 +76,18 @@ const IDE = () => {
                             {desc}
                         </div>
                     </div>
+                ))}
+            </div>
+
+            <div className="border-t-1 flex flex-row border-[#484A4F] mt-5 p-2">
+                {terminalNav.map(term => (
+                    <p key={term} className="text-mono text-[#9B9DA0] pr-5">{term}</p>
+                ))}
+            </div>
+
+            <div className="flex flex-col h-full w-full pl-2 overflow-y-auto">
+                {gitPushOutput.map(command => (
+                    <p key={command} className="text-[#C2CCC2]">{command}</p>
                 ))}
             </div>
 
