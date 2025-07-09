@@ -1,7 +1,7 @@
 
 const IDE = () => {
     const navBar = ["File", "Edit", "Selection", "View", "···"]
-    const terminalNav = ["PROBLEMS", "OUTPUT", "DEBUG CONSOLE", "TERMINAL", "PORTS"]
+    const terminalNav = ["PROBLEMS", "OUTPUT", "CONSOLE", "TERMINAL", "PORTS"]
     const tabs = ["index.html", "AboutMe.jsx", "main.jsx"]
     const descs = ["function AboutMe() {",
                     '  const name = "Sehej Brar";',
@@ -63,34 +63,36 @@ const IDE = () => {
                     ))}
                 </div>
             </div>
-            <p className="text-[#ABACAD] pl-5">{'src > components > AboutMe.jsx > AboutMe'}</p>
+
+            <p className="text-[#ABACAD] pl-5 w-full h-[3vh]">{'src > components > AboutMe.jsx > AboutMe'}</p>
             
-           <div className="overflow-auto font-mono text-sm rounded-md">
+           <div className="w-full h-[55vh] overflow-auto text-sm rounded-md">
                 {descs.map((desc, i) => (
                     <div key={i} className="flex">
-                        <div className="w-12 text-lg bg-[#292C34] text-gray-500 text-right pr-4 select-none border-r border-gray-700">
+                        <div className="w-12 text-lg font-mono bg-[#292C34] text-gray-500 text-right pr-4 select-none border-r border-gray-700">
                             {i + 1}
                         </div>
 
-                        <div className="flex-1 text-lg pl-4 text-[#d4d4d4] whitespace-pre-wrap break-words">
+                        <div className="flex-1 text-lg pl-4 font-mono text-[#d4d4d4] whitespace-pre-wrap break-words">
                             {desc}
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="border-t-1 flex flex-row border-[#484A4F] mt-5 p-2">
-                {terminalNav.map(term => (
-                    <p key={term} className="text-mono text-[#9B9DA0] pr-5">{term}</p>
-                ))}
+            <div className="w-full h-[25vh] border-t-1 border-[#484A4F] p-3 pl-3">
+                <div className="flex w-full h-[2vh] flex-row font-mono gap-x-5">
+                    {terminalNav.map(term => (
+                        <p key={term} className="text-[#9B9DA0] text-sm">{term}</p>
+                    ))}
+                </div>
+                
+                <div className="pt-3 w-full h-[23vh] overflow-y-auto font-mono">
+                    {gitPushOutput.map(command => (
+                        <p key={command} className="text-[#C2CCC2]">{command}</p>
+                    ))}
+                </div>
             </div>
-
-            <div className="flex flex-col h-full w-full pl-2 overflow-y-auto">
-                {gitPushOutput.map(command => (
-                    <p key={command} className="text-[#C2CCC2]">{command}</p>
-                ))}
-            </div>
-
         </div>
     )
 }
