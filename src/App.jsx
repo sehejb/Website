@@ -18,7 +18,7 @@ const App = () => {
         <AboutMe/>
       </div>
 
-      <div className="h-screen w-screen">
+      <div className="flex justify-center items-center h-screen w-screen">
         <ExperienceTerminal/>
       </div>
 
