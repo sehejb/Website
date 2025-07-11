@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Cards from "./components/Cards";
 import AboutMe from "./components/AboutMe"
+import ExperienceTerminal from "./components/ExperienceTerminal"
 
 const App = () => {
   return (
@@ -15,6 +16,10 @@ const App = () => {
 
       <div className="flex flex-col h-screen w-screen">
         <AboutMe/>
+      </div>
+
+      <div className="h-screen w-screen">
+        <ExperienceTerminal/>
       </div>
 
       <div className="h-screen w-screen">
