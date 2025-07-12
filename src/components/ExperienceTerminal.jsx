@@ -1,7 +1,6 @@
 
-const ExperienceTerminal = () => {
-
-    const jobs = [
+function AllExperience(oneline=false) {
+    let jobs = [
         {
             company: "Otipemisiwak Métis Government",
             role: "Software Developer",
@@ -30,36 +29,56 @@ const ExperienceTerminal = () => {
         },
     ]
 
+    if (oneline) {jobs = [jobs[0]]}
+
     return (
-        <div className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono">
+        <div className="flex flex-col justify-center p-2 px-5">
+            {jobs.map((job, i) => (
+                <div key={i} className="w-full h-1/6 bg-[#252930] p-2 rounded-xl mb-3">
+                    <p className="text-[#CFCE7F] text-md">commit {job.commit}</p>
+                    <p className="text-[#499AFF] text-lg">{job.company}</p>
+                    <span className="text-[#5DB89C] text-md">{job.role} </span>
+                    <span className="text-[#71797B] text-md">| Date: </span>
+                    <span className="text-[#B66E4C] text-md">{job.time}</span>
+                    <p className="text-white text-md mb-3">{job.desc}</p>
+                    <div className="pb-2">
+                        {job.skills.map((skill, j) => (
+                            <span key={j} className="bg-[#303C4F] rounded-xl border-1 border-[#445B84] text-[#5AA4EE] p-1 mx-1">{skill}</span>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+const ExperienceTerminal = () => {
+
+    const help = {
+        "about": "Show about me information",
+        "experience": "List work and project experience",
+        "projects": "Display personal projects",
+        "skills": "List technical skills",
+        "contact": "Show contact information"
+    }
+
+    return (
+        <div className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
             <div className="w-full h-[6vh] bg-[#22262D] rounded-t-2xl flex justify-center items-center">
                 <p className="text-white text-xl">sehej@portfolio:~/experience</p>
             </div>
 
             <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
-            <p className="text-lg text-white pl-3">$ git log --graph --experience</p>
+            <p className="text-lg text-white pl-3">$ git log --oneline --experience</p>
+            <AllExperience oneline={true}/>
 
-            <div className="flex flex-col justify-center p-2 px-5">
-                {jobs.map((job, i) => (
-                    <div key={i} className="w-full h-1/6 bg-[#252930] p-2 rounded-xl mb-3">
-                        <p className="text-[#CFCE7F] text-md">commit {job.commit}</p>
-                        <p className="text-[#499AFF] text-lg">{job.company}</p>
-                        <span className="text-[#5DB89C] text-md">{job.role} </span>
-                        <span className="text-[#71797B] text-md">| Date: </span>
-                        <span className="text-[#B66E4C] text-md">{job.time}</span>
-                        <p className="text-white text-md mb-3">{job.desc}</p>
-                        <div className="pb-2">
-                            {job.skills.map((skill, j) => (
-                                <span key={j} className="bg-[#303C4F] rounded-xl border-1 border-[#445B84] text-[#5AA4EE] p-1 mx-1">{skill}</span>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+            <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
+            <p className="text-lg text-white pl-3">$ git help --all</p>
 
-
-
-                
-            </div>
+            {Object.entries(help).map(([cmd, desc]) => (
+                <p id={cmd} className="text-white text-2xl">{cmd}</p>
+            ))}
+            
         </div>
     )
 }
