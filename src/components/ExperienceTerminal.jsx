@@ -66,7 +66,9 @@ function Help() {
         "skills --fw": "Show frameworks used",
         "skills --tools": "Show developer tools",
 
-        "help": "Display list of available commands"
+        "help": "Display list of available commands",
+
+        "clear": "Clear this terminal"
     };
 
     return (
@@ -153,10 +155,12 @@ function ShowSkills(languages = false, libraries = false, frameworks = false, to
 }
 
 const ExperienceTerminal = () => {
+
+    const prompt = <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
     
     const [history, setHistory] = useState([
-        {cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
-        {cmd: "$ git help --all", result: <Help/>}
+        {pr: prompt, cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
+        {pr: prompt, cmd: "$ git help --all", result: <Help/>}
     ])
 
     const commands = {
@@ -173,10 +177,13 @@ const ExperienceTerminal = () => {
 
         // "whoami": <AboutMe />,
 
-        "help": <Help />
+        "help": <Help />,
+
+        "clear": <Clear/>
     };
 
     const [input, setInput] = useState('')
+    const endTerminal = useRef()
 
     let inputRef = useRef()
 
@@ -184,6 +191,10 @@ const ExperienceTerminal = () => {
         root: null,
         rootMargin: "0px",
         threshold: 1
+    }
+
+    function Clear() {
+        setHistory([{}])
     }
 
     const callbackFunction = ([entries]) => {
@@ -202,29 +213,38 @@ const ExperienceTerminal = () => {
         
     }, [inputRef])
 
+    useEffect(() => {
+        endTerminal.current.scrollTop = endTerminal.current.scrollHeight
+    }, [history])
+
     const addResult = (event) => {
         if (event.key == "Enter") {
-            let comp = null
-            const inp = inputRef.current.value
-            if (inp == "show experience --all") {
-                comp = <AllExperience/>
-            } else if (inp == "help") {
-                comp = <Help/>
+            const inp = inputRef.current.value.toLowerCase()
+            
+            if (commands[inp]) {
+                setHistory(prev => 
+                    [...prev, {
+                        pr: prompt,
+                        cmd: `$ ${inp}`, 
+                        result: commands[inp]
+                    }]
+                )
+            } else {
+                setHistory(prev => 
+                    [...prev, {
+                        pr: prompt,
+                        cmd: `$ ${inp}`, 
+                        result: <p className="text-lg pt-3 px-7 text-red-700">Error: Command Not Found</p>
+                    }]
+                )
             }
-
-            setHistory(prev => 
-                [...prev, {
-                    cmd: `$ ${inp}`, 
-                    result: comp
-                }]
-            )
             
             setInput('')
         }
     }
 
     return (
-        <div id="terminal" className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
+        <div id="terminal" ref={endTerminal} className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
             <div className="w-full h-[6vh] bg-[#22262D] rounded-t-2xl flex justify-center items-center">
                 <p className="text-white text-xl">sehej@portfolio:~/experience</p>
             </div>
@@ -232,14 +252,12 @@ const ExperienceTerminal = () => {
             <div id="results" className="overflow-y-auto">
                 {history.map((line, i) => (
                     <div key={i}>
-                        <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
+                        <div>{line.pr}</div>
                         <p className="text-lg text-white pl-3">{line.cmd}</p>
                         <div>{line.result}</div>
                     </div>
                 ))}
             </div>
-
-            
 
             <p className="text-lg text-[#5DB89C] pl-3 pt-5">sehej@portfolio:~/experience</p>
             <span className="text-lg text-white pl-3">$ </span>
