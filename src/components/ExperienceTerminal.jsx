@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 
 function AllExperience(oneline=false) {
     let jobs = [
@@ -74,9 +75,34 @@ function Help() {
 }
 
 const ExperienceTerminal = () => {
-    let history = [{cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
+    let history = [
+        {cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
         {cmd: "$ git help --all", result: <Help/>}
     ]
+
+    let inputRef = useRef()
+
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1
+    }
+
+    const callbackFunction = ([entries]) => {
+        if (entries.isIntersecting) {
+            inputRef.current.focus()
+        }
+    }
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(callbackFunction, options)
+        if (inputRef.current) {observer.observe(inputRef.current)}
+
+        return () => {
+            if (inputRef.current) {observer.unobserve(inputRef.current)}
+        }
+        
+    }, [inputRef, options])
 
     return (
         <div id="terminal" className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
@@ -95,6 +121,8 @@ const ExperienceTerminal = () => {
             </div>
 
             <p className="text-lg text-[#5DB89C] pl-3 pt-5">sehej@portfolio:~/experience</p>
+            <span className="text-lg text-white pl-3">$ </span>
+            <input ref={inputRef} type="text" className="text-white bg-transparent border-collapse outline-none"></input>
 
         </div>
     )
