@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
-function AllExperience(oneline=false) {
+function AllExperience({oneline=false}) {
     let jobs = [
         {
             company: "Otipemisiwak Métis Government",
@@ -55,18 +55,25 @@ function AllExperience(oneline=false) {
 
 function Help() {
     const help = {
-        "about": "Show about me information",
-        "experience": "List work and project experience",
-        "projects": "Display personal projects",
-        "skills": "List technical skills",
-        "contact": "Show contact information"
-    }
+        "ls -exp": "List experience in compact view",
+        "ls -la -exp": "List all experience in full detail",
+
+        "cat resume.pdf": "View and download resume",
+
+        "skills --all": "Display all technical skills",
+        "skills --lang": "Show programming languages",
+        "skills --lib": "Show libraries/tools used",
+        "skills --fw": "Show frameworks used",
+        "skills --tools": "Show developer tools",
+
+        "help": "Display list of available commands"
+    };
 
     return (
         <div>
             {Object.entries(help).map(([cmd, desc]) => (
                 <div key={cmd} className="flex">
-                    <span key={cmd} className="text-[#499AFF] text-lg px-7 pt-3 w-[17ch]">{cmd}</span>
+                    <span key={cmd} className="text-[#499AFF] text-lg px-7 pt-3 w-[30ch]">{cmd}</span>
                     <span key={desc} className="text-[#71797B] text-lg pt-3">{desc}</span>
                 </div>
             ))}
@@ -74,11 +81,102 @@ function Help() {
     )
 }
 
+function DownloadResume() {
+    useEffect(() => {
+        const link = document.createElement("a")
+        link.href = "/Sehej Brar - Resume.pdf"
+        link.target = "_blank"
+        link.click()
+    }, [])
+
+    return (
+        <p className="text-lg text-[#5DB89C] pl-3 pt-3">Loading Resume...</p>
+    )
+}
+
+function ShowSkills(languages = false, libraries = false, frameworks = false, tools = false) {
+    return (
+        <div className="text-white text-base space-y-4 pl-7 pt-4">
+            {languages && 
+                <div>
+                    <p className="text-[#5DB89C] font-semibold mb-2">Languages</p>
+                    <div className="flex flex-wrap">
+                    {["Java", "Python", "C", "SQL", "JavaScript", "CSS", "Neo4j", "C#", "Assembly"].map((skill, j) => (
+                        <span key={j} className="bg-[#303C4F] rounded-xl border border-[#445B84] text-[#5AA4EE] p-1 mx-1">
+                        {skill}
+                        </span>
+                    ))}
+                    </div>
+                </div>
+            }
+
+            {libraries &&
+                <div>
+                    <p className="text-[#5DB89C] font-semibold mb-2">Libraries</p>
+                    <div className="flex flex-wrap">
+                    {["pandas", "Firebase SDK", "MongoDB", "NumPy", "Scikit-learn", "Matplotlib"].map((skill, j) => (
+                        <span key={j} className="bg-[#303C4F] rounded-xl border border-[#445B84] text-[#5AA4EE] p-1 mx-1">
+                        {skill}
+                        </span>
+                    ))}
+                    </div>
+                </div>
+            }
+
+            {frameworks &&
+                <div>
+                    <p className="text-[#5DB89C] font-semibold mb-2">Frameworks</p>
+                    <div className="flex flex-wrap">
+                    {["React", "Firebase", "Android SDK", "Angular", "Tailwind CSS", "PyTorch", "JUnit"].map((skill, j) => (
+                        <span key={j} className="bg-[#303C4F] rounded-xl border border-[#445B84] text-[#5AA4EE] p-1 mx-1">
+                        {skill}
+                        </span>
+                    ))}
+                    </div>
+                </div>
+            }
+
+            {tools && 
+                <div>
+                    <p className="text-[#5DB89C] font-semibold mb-2">Developer Tools</p>
+                    <div className="flex flex-wrap">
+                    {["Git", "VS Code", "Visual Studio", "Android Studio"].map((skill, j) => (
+                        <span key={j} className="bg-[#303C4F] rounded-xl border border-[#445B84] text-[#5AA4EE] p-1 mx-1">
+                        {skill}
+                        </span>
+                    ))}
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}
+
 const ExperienceTerminal = () => {
-    let history = [
+    
+    const [history, setHistory] = useState([
         {cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
         {cmd: "$ git help --all", result: <Help/>}
-    ]
+    ])
+
+    const commands = {
+        "ls -exp": <AllExperience oneline={true} />,
+        "ls -la -exp": <AllExperience />,
+
+        "cat resume.pdf": <DownloadResume />,
+
+        "skills --all": <ShowSkills languages={true} libraries={true} frameworks={true} tools={true} />,
+        "skills --lang": <ShowSkills languages={true} />,
+        "skills --lib": <ShowSkills libraries={true} />,
+        "skills --fw": <ShowSkills frameworks={true} />,
+        "skills --tools": <ShowSkills tools={true} />,
+
+        // "whoami": <AboutMe />,
+
+        "help": <Help />
+    };
+
+    const [input, setInput] = useState('')
 
     let inputRef = useRef()
 
@@ -102,7 +200,28 @@ const ExperienceTerminal = () => {
             if (inputRef.current) {observer.unobserve(inputRef.current)}
         }
         
-    }, [inputRef, options])
+    }, [inputRef])
+
+    const addResult = (event) => {
+        if (event.key == "Enter") {
+            let comp = null
+            const inp = inputRef.current.value
+            if (inp == "show experience --all") {
+                comp = <AllExperience/>
+            } else if (inp == "help") {
+                comp = <Help/>
+            }
+
+            setHistory(prev => 
+                [...prev, {
+                    cmd: `$ ${inp}`, 
+                    result: comp
+                }]
+            )
+            
+            setInput('')
+        }
+    }
 
     return (
         <div id="terminal" className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
@@ -110,7 +229,7 @@ const ExperienceTerminal = () => {
                 <p className="text-white text-xl">sehej@portfolio:~/experience</p>
             </div>
 
-            <div id="results">
+            <div id="results" className="overflow-y-auto">
                 {history.map((line, i) => (
                     <div key={i}>
                         <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
@@ -120,10 +239,11 @@ const ExperienceTerminal = () => {
                 ))}
             </div>
 
+            
+
             <p className="text-lg text-[#5DB89C] pl-3 pt-5">sehej@portfolio:~/experience</p>
             <span className="text-lg text-white pl-3">$ </span>
-            <input ref={inputRef} type="text" className="text-white bg-transparent border-collapse outline-none"></input>
-
+            <input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={addResult} type="text" className=" w-11/12 text-white text-lg bg-transparent border-collapse outline-none"/>
         </div>
     )
 }
