@@ -177,6 +177,8 @@ const ExperienceTerminal = () => {
 
         // "whoami": <AboutMe />,
 
+        // connect: <Connect/>
+
         "help": <Help />,
 
         "clear": <Clear/>

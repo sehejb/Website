@@ -1,8 +1,8 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Cards from "./components/Cards";
 import AboutMe from "./components/AboutMe"
 import ExperienceTerminal from "./components/ExperienceTerminal"
+import Footer from "./components/Footer"
 
 const App = () => {
   return (
@@ -22,8 +22,8 @@ const App = () => {
         <ExperienceTerminal/>
       </div>
 
-      <div className="h-screen w-screen">
-        <Cards/>
+      <div className="flex flex-col h-screen w-screen">
+        <Footer/>
       </div>
         
     </main>
