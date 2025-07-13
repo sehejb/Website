@@ -244,7 +244,7 @@ const ExperienceTerminal = () => {
     }
 
     return (
-        <div id="terminal" ref={endTerminal} className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
+        <div id="terminal" ref={endTerminal} className="w-[92vw] h-[87vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
             <div className="w-full h-[6vh] bg-[#22262D] rounded-t-2xl flex justify-center items-center">
                 <p className="text-white text-xl">sehej@portfolio:~/experience</p>
             </div>
