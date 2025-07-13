@@ -34,7 +34,7 @@ function AllExperience(oneline=false) {
     return (
         <div className="flex flex-col justify-center p-2 px-5">
             {jobs.map((job, i) => (
-                <div key={i} className="w-full h-1/6 bg-[#252930] p-2 rounded-xl mb-3">
+                <div key={i} className="w-full h-1/6 bg-[#252930] pt-2 pb-2 rounded-xl">
                     <p className="text-[#CFCE7F] text-md">commit {job.commit}</p>
                     <p className="text-[#499AFF] text-lg">{job.company}</p>
                     <span className="text-[#5DB89C] text-md">{job.role} </span>
@@ -52,8 +52,7 @@ function AllExperience(oneline=false) {
     )
 }
 
-const ExperienceTerminal = () => {
-
+function Help() {
     const help = {
         "about": "Show about me information",
         "experience": "List work and project experience",
@@ -63,22 +62,40 @@ const ExperienceTerminal = () => {
     }
 
     return (
-        <div className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
+        <div>
+            {Object.entries(help).map(([cmd, desc]) => (
+                <div key={cmd} className="flex">
+                    <span key={cmd} className="text-[#499AFF] text-lg px-7 pt-3 w-[17ch]">{cmd}</span>
+                    <span key={desc} className="text-[#71797B] text-lg pt-3">{desc}</span>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+const ExperienceTerminal = () => {
+    let history = [{cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
+        {cmd: "$ git help --all", result: <Help/>}
+    ]
+
+    return (
+        <div id="terminal" className="w-[98vw] h-[95vh] bg-[#2A2C34] rounded-2xl font-mono overflow-y-auto">
             <div className="w-full h-[6vh] bg-[#22262D] rounded-t-2xl flex justify-center items-center">
                 <p className="text-white text-xl">sehej@portfolio:~/experience</p>
             </div>
 
-            <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
-            <p className="text-lg text-white pl-3">$ git log --oneline --experience</p>
-            <AllExperience oneline={true}/>
+            <div id="results">
+                {history.map((line, i) => (
+                    <div key={i}>
+                        <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
+                        <p className="text-lg text-white pl-3">{line.cmd}</p>
+                        <div>{line.result}</div>
+                    </div>
+                ))}
+            </div>
 
-            <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
-            <p className="text-lg text-white pl-3">$ git help --all</p>
+            <p className="text-lg text-[#5DB89C] pl-3 pt-5">sehej@portfolio:~/experience</p>
 
-            {Object.entries(help).map(([cmd, desc]) => (
-                <p id={cmd} className="text-white text-2xl">{cmd}</p>
-            ))}
-            
         </div>
     )
 }
