@@ -3,7 +3,7 @@ import Activity from "./Activity"
 
 const Footer = () => {
     return (
-        <div className="w-screen min-h-[65vh] ">
+        <div className="w-screen h-full">
             <h1 className="p-5 text-5xl text-white text-center">Thank You for Visiting</h1>
             <div className='w-full flex'>
                 <div className="w-1/2 flex flex-col p-7">

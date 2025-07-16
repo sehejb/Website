@@ -41,7 +41,7 @@ function AllExperience({oneline=false}) {
                     <span className="text-[#5DB89C] text-md">{job.role} </span>
                     <span className="text-[#71797B] text-md">| Date: </span>
                     <span className="text-[#B66E4C] text-md">{job.time}</span>
-                    <p className="text-white text-md mb-3">{job.desc}</p>
+                    <p className="text-white text-md mb-3 pr-2">{job.desc}</p>
                     <div className="pb-2">
                         {job.skills.map((skill, j) => (
                             <span key={j} className="bg-[#303C4F] rounded-xl border-1 border-[#445B84] text-[#5AA4EE] p-1 mx-1">{skill}</span>
