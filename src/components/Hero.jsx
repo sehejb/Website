@@ -59,7 +59,8 @@ const Hero = () => {
         // Start: transparent, 50 px below its final position
         // Finish: opaque, at its final position, 2s duration, 0.25s after page load
         gsap.fromTo("#intro", {y: 50, opacity:0}, 
-            {y:0, opacity:1, duration:2, delay:0.25})
+            {y:0, opacity:1, duration:2, delay:0.25}
+        )
 
         // Cursor animation
         // Fades out cursor, repeats the animation, reverses animation so it fades in, each fade lasts 2s, animation
@@ -115,24 +116,24 @@ const Hero = () => {
             {/* set up the canvas and place the model on it */}
             <div className='h-2/3'>
                 <div className='w-full h-full'>
-                    <Canvas shadows camera={{position: [-525, 215, 30], fov: 33}}>
-                    <Floor/>
+                    {/* <Canvas shadows camera={{position: [-525, 215, 30], fov: 33}}> */}
+                        {/* <Floor/> */}
 
-                    <Model/> 
-                
-                    {/* zoom in until 10 units away, zoom out until 60 units away */}
-                    <OrbitControls makeDefault target={[-3, 5, -9]} autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80} enableZoom={false}/>
+                        {/* <Model/>  */}
                     
-                    {/* for the model itself */}
-                    <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
-                    <ambientLight intensity={0.095}/>
-                    
-                    {/* only on face */}
-                    {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
+                        {/* zoom in until 10 units away, zoom out until 60 units away */}
+                        {/* <OrbitControls makeDefault target={[-3, 5, -9]} autoRotate autoRotateSpeed={3} minDistance={25} maxDistance={80} enableZoom={false}/> */}
+                        
+                        {/* for the model itself */}
+                        {/* <spotLight castShadow position={[10, 150, 60]} intensity={2.5} angle = {0.2} penumbra = {0.7} decay = {0}/>
+                        <ambientLight intensity={0.095}/> */}
+                        
+                        {/* only on face */}
+                        {/* <pointLight position={[-3, 15, -0.6]} intensity={4} decay={2.5}/> */}
 
-                    {/* light out of the lamp */}
-                    <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/>
-                </Canvas>
+                        {/* light out of the lamp */}
+                        {/* <pointLight position={[10.7, 20.5, -13]} intensity={20} decay={1.1}/> */}
+                    {/* </Canvas> */}
                 </div>
             </div>
         </div>
