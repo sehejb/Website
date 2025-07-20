@@ -1,12 +1,13 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap'
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { SiGithub, SiLinkedin, SiMailboxdotorg} from 'react-icons/si';
 
 const SystemOff = () => {
     const services = ["portfolio.service", "experience.service", "projects.service", "skills.service"]
     const permsRef = useRef()
     const signOutRef = useRef()
+    const targetRef = useRef()
     let tl = gsap.timeline({repeat: 0})
 
     useGSAP(() => {
@@ -28,10 +29,14 @@ const SystemOff = () => {
     
     } ,[]);
 
+    useEffect(() => {
+
+    })
+
     return (
         <div className="w-full h-full font-mono overflow-hidden">
             <h1 className="text-3xl text-white flex justify-center">Shutting down sehej-brar.dev...</h1>
-            <div className="w-full h-full flex">
+            <div ref={targetRef} className="w-full h-full flex">
                 <div className="w-1/2 h-full items-start justify-start">
                     <p className="text-2xl text-white flex justify-center pt-3">Stopping Services...</p>
                     <ul className="list-none text-white text-xl pl-7 pt-2 space-y-5 my-4">
