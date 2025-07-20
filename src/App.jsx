@@ -3,7 +3,6 @@ import Hero from "./components/Hero";
 import AboutMe from "./components/AboutMe"
 import ExperienceTerminal from "./components/ExperienceTerminal"
 import SystemOff from "./components/SystemOff"
-import Footer from "./components/Footer"
 
 const App = () => {
   return (
@@ -23,14 +22,9 @@ const App = () => {
         <ExperienceTerminal/>
       </div>
 
-      <div className="w-full h-[60vh]">
+      <div className="w-full h-[50vh]">
         <SystemOff/>
       </div>
-
-      <div className="flex flex-col h-[50vh] w-screen">
-        <Footer/>
-      </div>
-        
     </main>
   );
 };

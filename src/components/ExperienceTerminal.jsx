@@ -159,8 +159,8 @@ const ExperienceTerminal = () => {
     const prompt = <p className="text-lg text-[#5DB89C] pl-3 pt-3">sehej@portfolio:~/experience</p>
     
     const [history, setHistory] = useState([
-        {pr: prompt, cmd: "$ git log --oneline --experience", result: <AllExperience oneline={true}/> },
-        {pr: prompt, cmd: "$ git help --all", result: <Help/>}
+        {pr: prompt, cmd: "$ ls -exp", result: <AllExperience oneline={true}/> },
+        {pr: prompt, cmd: "$ help", result: <Help/>}
     ])
 
     const commands = {

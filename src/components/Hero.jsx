@@ -75,7 +75,7 @@ const Hero = () => {
             tlMaster.to(titleRef.current, {duration: 2, text: word, ease: 'none'})
 
             tlMaster.call(() => deleteChar(titleRef)) // add the function into the timeline
-            tlMaster.to({}, {duration: Math.round(word.length / 10)}) // delay of 0.1s per char
+            tlMaster.to({}, {duration: Math.round((word.length + 2) / 5)}) // delay of 0.1s per char
         
         // play the timeline
         tlMaster.play()
