@@ -10,37 +10,52 @@ const SystemOff = () => {
     const targetRef = useRef()
     let tl = gsap.timeline({repeat: 0})
 
-    useGSAP(() => {
-        tl.fromTo(".bar", {width: "0%"}, 
-            {width: "60%", duration: 2, stagger: 2}, "+=0.25"
-        )
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1
+    }
 
-        tl.to(permsRef.current, {duration: 3, text: "Power off? [Y/N]    Y", ease: gsap.SteppedEase}, "+=1.25")
+    const callbackFunction = ([entries]) => {
+        if (entries.isIntersecting) {
+            gsap.utils.toArray(".bar").forEach((bar, i) => {
+                tl.fromTo(bar, {width: "0%", backgroundColor: "#FF0000"}, 
+                    {width: "60%", duration: 2, delay: i * 0.05, onComplete: () => {gsap.to(bar, {backgroundColor: "#4BB543"})}}, "+=0.75"
+                )
+            })
 
-        tl.fromTo(signOutRef.current, {y: 50, opacity:0}, 
-            {y:0, opacity:1},"+=1.25"
-        )
+            tl.to(permsRef.current, {duration: 3, text: "Power off? [Y/N]    Y", ease: gsap.SteppedEase}, "+=1.25")
 
-        tl.fromTo(".socials", {y: 50, opacity:0}, 
-            {y:0, opacity:1, duration:1, stagger: 1.25}
-        )
+            tl.fromTo(signOutRef.current, {y: 50, opacity:0}, 
+                {y:0, opacity:1},"+=1.25"
+            )
 
-        tl.play()
-    
-    } ,[]);
+            tl.fromTo(".socials", {y: 50, opacity:0}, 
+                {y:0, opacity:1, duration:1, stagger: 1.25}
+            )
+
+            tl.play()
+        }
+    }
 
     useEffect(() => {
+        const observer = new IntersectionObserver(callbackFunction, options)
+        if (targetRef.current) {observer.observe(targetRef.current)}
 
-    })
+        return () => {
+            if (targetRef.current) {observer.unobserve(targetRef.current)}
+        }
+        
+    }, [targetRef])
 
     return (
         <div className="w-full h-full font-mono overflow-hidden">
             <h1 className="text-3xl text-white flex justify-center">Shutting down sehej-brar.dev...</h1>
-            <div ref={targetRef} className="w-full h-full flex">
+            <div className="w-full h-full flex">
                 <div className="w-1/2 h-full items-start justify-start">
                     <p className="text-2xl text-white flex justify-center pt-3">Stopping Services...</p>
-                    <ul className="list-none text-white text-xl pl-7 pt-2 space-y-5 my-4">
-                        {services.map((serv, i) => (
+                    <ul ref={targetRef} className="list-none text-white text-xl pl-7 pt-2 space-y-5 my-4">
+                        {services.map(serv => (
                             <li key={serv} className="flex flex-row">
                                 <span className="w-[25ch]">{serv}</span>
                                 <div className="bar pl-10 h-[28px] flex bg-white"/>
